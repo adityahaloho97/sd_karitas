@@ -1,0 +1,4 @@
+[2020-05-28 12:37:26.366] [sharedprocess] [info] main {"machineId":"52add35e24c484a2cc43e538bee577b84a29d63fee18d236e24929fcbf29d0ee","windowId":2}
+[2020-05-28 12:37:27.347] [sharedprocess] [error] [File Watcher (node.js)] Error: ENOENT: no such file or directory, stat '/opt/lampp/htdocs/project_adit/~/.vscode-root/User/snippets'
+[2020-05-28 12:37:45.088] [sharedprocess] [info] Deleted from disk zhuangtongfa.material-theme /root/.vscode/extensions/zhuangtongfa.material-theme-3.7.0
+[2020-05-28 12:38:06.418] [sharedprocess] [info] Starting to clean up unused language packs.
