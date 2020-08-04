@@ -10,7 +10,7 @@ class Home extends CI_Controller {
 
 	public function index(){
 		$data = [
-			'title' => ' SD Karitas Nandan'
+			'title' => ' Karitas Nandan'
 		];
 
 		$this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
