@@ -22,12 +22,16 @@ class Auth extends CI_controller
             $this->load->view('v_admin/v_login');
         } else {
             //cek data for admin
-            $user = $this->m_auth->cekUserAdmin($this->input->post('username', TRUE));
+            $user = $this->m_auth->cekUserAdmin($this->input->post('username','password', TRUE));
             
             if (!empty($user)) {
+                /*if (email_verify($this->input->post('username'), $user['username'])) {
+
+                }
+                */
                 if (password_verify($this->input->post('password'), $user['password'])) {
                     $data = [
-                        'is_login' => 'punten',
+                        'is_login' => 'mangga',
                         'nama' => $user['nama'],
                         'username' => $user['username'],
                         'nama_role' => 'Admin',
@@ -38,6 +42,8 @@ class Auth extends CI_controller
                     $this->session->set_userdata($data);
                     $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil login');
                     redirect('admin/dashboard');
+              /*  { else }
+                    $this->session->set_flashdata('msg_failed','Ups!, Email atu Username anda salah!');redirect('admin');*/    
                 } else {
                     $this->session->set_flashdata('msg_failed', 'Ups!, Password anda salah!');
                     redirect('admin');
@@ -55,18 +61,17 @@ class Auth extends CI_controller
         $this->session->unset_userdata('nama');
         $this->session->unset_userdata('foto');
         $this->session->unset_userdata('nama_role');
-        $this->session->unset_userdata('nisn');
-        $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil logut');
-        redirect('/');
+        $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil logout');
+        redirect('admin');
     }
 
-    public function logout_peserta()
+    public function logout_sistem()
     {
 
         //update login status
             $this->session->unset_userdata('is_login');
             $this->session->unset_userdata('nama');
-            $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil logut');
+            $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil logout');
             redirect('?p=login');
     }
 }

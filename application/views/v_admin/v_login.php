@@ -36,7 +36,7 @@
 
       <form action="" method="post">
           <div class="form-group">
-            <small class="text-danger"><?= form_error('email') ?></small>
+            <small class="text-danger"><?= form_error('username') ?></small>
             <div class="input-group mb-3">
                 <input type="text" name="username" class="form-control" placeholder="Email atau Username" value="<?= set_value('email') ?>">
                 <div class="input-group-append">

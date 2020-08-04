@@ -31,7 +31,9 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Tentang</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#alur">Alur Pendaftaran</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Daftar</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="<?=base_url()?>pengumuman">Pengumuman</a></li>
                     </ul>
                 </div>
             </div>
@@ -71,6 +73,27 @@
 
             </div>
         </section>
+
+        <!-- About Section-->
+        <section class="page-section mb-0" id="alur">
+            <div class="container">
+                <!-- About Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Alur Pendaftaran</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- About Section Content-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="<?=base_url('assets/images/1.png')?>" style="width:100%" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </section>
         <!-- Contact Section-->
         <section class="page-section" id="contact">
             <div class="container">
@@ -100,8 +123,10 @@
                                 <div class="col-md-4">
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
-                                            <label>NISN <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="nisn" type="text" placeholder="NISN" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nisn')?>" />
+                                            <label>NISN </label>
+                                            
+                                            <input class="form-control" id="name" name="nisn" type="text" placeholder="NISN" data-validation-required-message="Please enter your name." value="<?php echo set_value('nisn')?>" />
+                                            <small>belum memiliki NISN kosongkan</small>
                                             <small class="text-danger"><?= form_error('nisn') ?></small>
                                         </div>
                                     </div>
@@ -112,7 +137,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                         <label>Tanggal lahir <span class="text-danger">*</span></label>
-                                        <input type="text" name="tgl_lahir" class="form-control" placeholder="Tanggal Lahir" value="<?php echo set_value('tgl_lahir')?>" id="datepicker" required="required">
+                                        <input type="text" name="tgl_lahir" class="form-control" placeholder="MM/DD/YYYY" value="<?php echo set_value('tgl_lahir')?>" id="datepicker" required="required">
                                         <small class="text-danger"><?= form_error('tgl_lahir') ?></small>
                                         </div>
                                     </div>
@@ -154,7 +179,14 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Agama <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" type="text" placeholder="Masukkan Agama" name="agama" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('agama')?>" />
+                                            <select name="agama" id="agama" class="form-control" placeholder="Pilih Agama" require>
+                                                <option value="">Pilih Agama</option>
+                                                <option value="islam">Islam</option>
+                                                <option value="kristen">Kristen</option>
+                                                <option value="hindu">Hindu</option>
+                                                <option value="budha">Budha</option>
+                                                <option value="konghucu">Konghucu</option>
+                                            </select>
                                             <small class="text-danger"><?= form_error('agama') ?></small>
                                         </div>
                                     </div>

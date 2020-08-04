@@ -21,13 +21,14 @@ class Auth extends CI_controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('v_guru/v_login');
         } else {
-            //cek data for admin
+            //cek data for guru
             $user = $this->m_auth->cekUserGuru($this->input->post('username', TRUE));
             
             if (!empty($user)) {
                 if (password_verify($this->input->post('password'), $user['password'])) {
+
                     $data = [
-                        'is_login' => 'punten',
+                        'is_login' => 'mangga',
                         'nama' => $user['nama'],
                         'username' => $user['nip'],
                         'nama_role' => 'Guru',
@@ -60,7 +61,7 @@ class Auth extends CI_controller
         redirect('/');
     }
 
-    public function logout_peserta()
+    public function logout_sistem()
     {
 
         //update login status

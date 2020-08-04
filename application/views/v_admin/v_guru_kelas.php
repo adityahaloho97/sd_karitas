@@ -27,7 +27,7 @@
                       <!-- general form elements -->
                       <div class="card card-default ">
                           <div class="card-header">
-                              <h3 class="card-title"><i class="far fa-dollar"></i> Tabel Konfigurasi Guru Kelas</h3>
+                              <h3 class="card-title"><i class="far fa-dollar"></i> Tabel Konfigurasi Wali Kelas</h3>
                               <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-add" class="btn btn-sm btn-primary float-right ml-3"><i class="fa fa-plus"></i> Tambah Konfigurasi</a>
                           </div>
                           <!-- /.card-header -->
@@ -133,7 +133,7 @@
                    </div>
                    <div class="modal-body">
                          <!-- form start -->
-                      <form action="<?=base_url('admin/tenaga_kependidikan/update_guru_kelas')?>" method="post" role="form">
+                      <form action="<?=base_url('admin/Tenaga_pendidik/update_guru_kelas')?>" method="post" role="form">
                       <input type="hidden" id="id_gtk_update" name="id_gtk" value="">
                       <div class="row">
                         <div class="col-md-12">
@@ -196,7 +196,7 @@
      var dataId = this.id;
      $.ajax({
        type: "post",
-       url: "<?= base_url('admin/tenaga_kependidikan/update_guru_kelas') ?>",
+       url: "<?= base_url('admin/Tenaga_pendidik/update_guru_kelas') ?>",
        data: {
          'id_get_update': dataId
        },
@@ -224,15 +224,15 @@
          if (isConfirm.value) {
            $.ajax({
              type: "post",
-             url: "<?= base_url() ?>admin/tenaga_kependidikan/delete/" + dataId,
+             url: "<?= base_url() ?>admin/Tenaga_pendidik/delete/" + dataId,
              data: {
                'id_kelas': dataId
              },
              success: function(respone) {
-               window.location.href = "<?= base_url('admin/tenaga_kependidikan') ?>";
+               window.location.href = "<?= base_url('admin/Tenaga_pendidik') ?>";
              },
              error: function(request, error) {
-               window.location.href = "<?= base_url('admin/tenaga_kependidikan') ?>";
+               window.location.href = "<?= base_url('admin/Tenaga_pendidik') ?>";
              },
            });
          } else {

@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard')?>">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?= base_url('admin/tenaga_kependidikan')?>">Daftar GTK</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url('admin/Tenaga_pendidik')?>">Daftar GTK</a></li>
               <li class="breadcrumb-item active">Tambah</li>
             </ol>
           </div><!-- /.col -->
@@ -28,7 +28,7 @@
             <!-- general form elements -->
             <div class="card card-default ">
               <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-user-plus"></i> Tambah Alumni</h3>
+                <h3 class="card-title"><i class="fa fa-user-plus"></i> Tambah Tenaga Pendidik</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -44,11 +44,11 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label >Status GTK</label>
-                                <select name="status" id="status" class="form-control select2bs4" data-placeholder="Pilih Status GTK">
+                                <label >Status Guru</label>
+                                <select name="status" id="status" class="form-control select2bs4" data-placeholder="Pilih Status Guru">
                                     <option></option>
+                                    <option value="wali kelas">Wali Kelas</option>
                                     <option value="guru">Guru</option>
-                                    <option value="pegawai">Pegawai</option>
                                 </select>
                                 <small class="text-danger mt-2"><?= form_error('status') ?></small>
                             </div>
@@ -226,28 +226,4 @@
       var output = document.getElementById('output');
       output.src = URL.createObjectURL(event.target.files[0]);
     };
-
-    $('#prodi').on('change', function(){
-        var id_jurusan = $('#prodi').val();
-
-        $.ajax({
-            type : "POST",
-            url : "<?= base_url('admin/alumni/get_kelas')?>",
-            data : {'id' : id_jurusan},
-            dataType : "json",
-            success : function(data){
-
-                var html = '';
-                var i;
-
-                for(i = 0; i<data.length; i++){
-                    html += '<option value="'+data[i].id_kelas+'">'+data[i].nama_kelas+'</option>'
-                }
-
-                $('#kelas').html(html);
-
-            }
-        })
-    });
   </script>
-  

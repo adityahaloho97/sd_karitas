@@ -13,7 +13,7 @@ class Pengguna extends CI_controller
         //login cek and authentication
         getAuthAdmin();
 
-        //load whatever you want bitch!!
+        //load !!
         $this->load->model('m_users');
     }
 

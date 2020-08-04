@@ -27,11 +27,10 @@
                       <!-- general form elements -->
                       <div class="card card-default ">
                           <div class="card-header">
-                              <h3 class="card-title"><i class="far fa-dollar"></i> Tabel Daftar Tenaga Pendidik</h3>
+                              <h3 class="card-title"><i class="far fa-dollar"></i> Tabel Daftar Pegawai</h3>
                              
-                              <a href="<?php echo base_url('admin/Tenaga_pendidik/tambah')?>" class="btn btn-sm btn-primary float-right ml-3"><i class="fa fa-plus"></i> Tambah Tenaga Pendidik</a>
-                              <a href="<?php echo base_url('admin/Tenaga_pendidik/guru_kelas')?>" class="btn btn-sm btn-success float-right ml-3"><i class="fa fa-plus"></i> Konfigurasi Wali Kelas </a>
-                              <a href="<?php echo base_url('admin/Tenaga_pendidik/laporan')?>" class="btn btn-sm btn-warning float-right ml-3"><i class="fa fa-download"></i> Download Laporan Tenaga Pendidik </a>
+                              <a href="<?php echo base_url('admin/pegawai/tambah')?>" class="btn btn-sm btn-primary float-right ml-3"><i class="fa fa-plus"></i> Tambah Pegawai</a>
+                              <a href="<?php echo base_url('admin/pegawai/laporan')?>" class="btn btn-sm btn-warning float-right ml-3"><i class="fa fa-download"></i> Download Laporan Pegawai </a>
                           </div>
                           <!-- /.card-header -->
                           <!-- form start -->
@@ -68,8 +67,8 @@
                                         $label = 'success';
                                     break;
 
-                                    case 'wali kelas' :
-                                        $label = 'info';
+                                    case 'pegawai' :
+                                        $label = 'warning';
                                     break;
                                 }
                              ?>
@@ -81,7 +80,7 @@
                                 <td><?=$gender?></td>
                                 <td><?=$k['telepon']?></td>
                                 <td><label class="btn btn-sm btn-<?=$label?>"><?php echo ucwords($k['hak_akses'])?></label></td>
-                                <td><a href="<?=base_url('admin/Tenaga_pendidik/update/').$k['id_tenaga_kependidikan']?>" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$k['id_tenaga_kependidikan']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
+                                <td><a href="<?=base_url('admin/pegawai/update/').$k['id_tenaga_kependidikan']?>" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$k['id_tenaga_kependidikan']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
                               </tr>
                              <?php endforeach; ?>
                              </tbody>
@@ -194,15 +193,15 @@
          if (isConfirm.value) {
            $.ajax({
              type: "post",
-             url: "<?= base_url() ?>admin/Tenaga_pendidik/delete/" + dataId,
+             url: "<?= base_url() ?>admin/pegawai/delete/" + dataId,
              data: {
                'id_kelas': dataId
              },
              success: function(respone) {
-               window.location.href = "<?= base_url('admin/Tenaga_pendidik') ?>";
+               window.location.href = "<?= base_url('admin/pegawai') ?>";
              },
              error: function(request, error) {
-               window.location.href = "<?= base_url('admin/Tenaga_pendidik') ?>";
+               window.location.href = "<?= base_url('admin/pegawai') ?>";
              },
            });
          } else {

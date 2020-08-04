@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard')?>">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?= base_url('admin/tenaga_kependidikan')?>">Daftar GTK</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url('admin/pegawai')?>">Daftar Pegawai</a></li>
               <li class="breadcrumb-item active">Perbarui</li>
             </ol>
           </div><!-- /.col -->
@@ -28,7 +28,7 @@
             <!-- general form elements -->
             <div class="card card-default ">
               <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-user-plus"></i> Perbarui GTK</h3>
+                <h3 class="card-title"><i class="fa fa-user-plus"></i> Perbarui Pegawai</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->

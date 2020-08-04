@@ -15,11 +15,7 @@ class M_auth extends CI_Model
     }
 
     public function cekUserGuru($email){
-        $this->db->select('*');
-        $this->db->from('tenaga_kependidikan');
-        $this->db->where('nip', $email);
-        $this->db->where('hak_akses', 'guru');
-        return $this->db->get()->row_array();
+        return $this->db->query("SELECT * FROM `tenaga_kependidikan` WHERE `nip` = $email AND (`hak_akses` = 'guru' OR `hak_akses` = 'wali kelas')")->row_array();
     }
 
     public function cekUserPegawai($email){

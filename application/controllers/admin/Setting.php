@@ -48,7 +48,7 @@ class Setting extends CI_Controller
 	}
 
 	public function password(){
-		$nisn = $this->session->userdata('username');
+		$email = $this->session->userdata('username');
 
 		$data = [
 			'title' => 'Perbarui Password'
@@ -61,11 +61,11 @@ class Setting extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			getViews($data, 'v_admin/v_setting_password');
 		}else{
-			//update password peserta
+			//update password
 			$newPass = password_hash($this->input->post('pass2'), PASSWORD_DEFAULT);
 
 			$this->db->set('password', $newPass);
-			$this->db->where('username', $nisn);
+			$this->db->where('username', $email);
 			$updatePass = $this->db->update('admin');
 
 			if ($updatePass) {

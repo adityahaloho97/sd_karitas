@@ -6,7 +6,7 @@ $project = explode('/', $_SERVER['REQUEST_URI'])[1];
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Laporan Data Alumni</title>
+  <title>Laporan Data Siswa</title>
   <style type="text/css">
     .table-me{
       font-size: 14px;

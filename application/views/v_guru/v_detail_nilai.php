@@ -61,7 +61,7 @@
           $flag = 1;
           foreach($kelas AS $k) :
             $nisn = $this->uri->segment(4);
-            $getNilai = $this->db->query("SELECT * FROM `nilai` JOIN mata_pelajaran ON mata_pelajaran.kode_mapel=nilai.kode_mapel WHERE `nisn` = $nisn  AND `id_kelas` = $k")->result_array();
+            $getNilai = $this->db->query("SELECT * FROM `nilai` JOIN mata_pelajaran ON mata_pelajaran.kode_mapel=nilai.kode_mapel WHERE `id_siswa` = $nisn  AND `id_kelas` = $k")->result_array();
             $namaKelas = $this->db->get_where('kelas', ['id_kelas' => $k])->row_array();
          ?>
           <div class="card card-default ">

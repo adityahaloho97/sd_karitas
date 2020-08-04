@@ -213,10 +213,11 @@
   $(function() {
     $("#example1").DataTable({});
     $('#example2').DataTable({
+      "columnDefs": [{ "orderable": false, "targets": 0 }],
       "paging": true,
       "lengthChange": false,
       "searching": false,
-      "ordering": true,
+      "ordering": false,
       "info": true,
       "autoWidth": false,
     });
@@ -270,7 +271,7 @@
                 }else{
                   var gender = 'Laki - Laki';
                 }
-                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-detail" onclick="detail('+data[i].nisn+')" class="btn btn-sm btn-primary mr-1 detail"><i class="fa fa-eye"></i> Detail</a> <a href="<?=base_url('guru/siswa/nilai/')?>' + data[i].nisn + '" class="btn btn-sm btn-info mr-1 detail"><i class="fa fa-eye"></i> Nilai</a></td></tr>'
+                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-detail" onclick="detail('+data[i].nisn+')" class="btn btn-sm btn-primary mr-1 detail"><i class="fa fa-eye"></i> Detail</a> <a href="<?=base_url('guru/siswa/nilai/')?>' + data[i].id_siswa + '" class="btn btn-sm btn-info mr-1 detail"><i class="fa fa-eye"></i> Nilai</a></td></tr>'
                 no++;
               }
             } else {
@@ -300,7 +301,7 @@
                 }else{
                   var gender = 'Laki - Laki';
                 }
-                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-detail" onclick="detail('+data[i].nisn+')" class="btn btn-sm btn-primary mr-1 detail"><i class="fa fa-eye"></i> Detail</a> <a href="<?=base_url('guru/siswa/nilai/')?>' + data[i].nisn + '" class="btn btn-sm btn-info mr-1 detail"><i class="fa fa-eye"></i> Nilai</a></td></tr>'
+                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-detail" onclick="detail('+data[i].nisn+')" class="btn btn-sm btn-primary mr-1 detail"><i class="fa fa-eye"></i> Detail</a> <a href="<?=base_url('guru/siswa/nilai/')?>' + data[i].id_siswa + '" class="btn btn-sm btn-info mr-1 detail"><i class="fa fa-eye"></i> Nilai</a></td></tr>'
                 no++;
               }
             } else {

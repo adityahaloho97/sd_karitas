@@ -10,7 +10,7 @@
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Dashboard</a></li>
-                          <li class="breadcrumb-item active">Konfigurasi Mapel Kelas</li>
+                          <li class="breadcrumb-item active">Daftar Mengajar</li>
                       </ol>
                   </div><!-- /.col -->
               </div><!-- /.row -->
@@ -27,39 +27,37 @@
                       <!-- general form elements -->
                       <div class="card card-default ">
                           <div class="card-header">
-                              <h3 class="card-title"><i class="far fa-dollar"></i> Tabel Konfigurasi Mapel Kelas</h3>
-                              <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-add" class="btn btn-sm btn-primary float-right ml-3"><i class="fa fa-plus"></i> Tambah Konfigurasi</a>
+                              <h3 class="card-title"><i class="far fa-dollar"></i> Tabel Daftar Mengajar</h3>
+                             
+                              <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-add" class="btn btn-sm btn-primary float-right ml-3"><i class="fa fa-plus"></i> Tambah Guru mengajar</a>
                           </div>
                           <!-- /.card-header -->
                           <!-- form start -->
+          
                           <div class="card-body">
-                          
                             <table id="example1" class="table table-striped">
                              <thead>
                                <tr>
                                  <th class="text-nowrap" style="width: 5%">No</th>
-                                 <th class="text-nowrap" style="width: 15%">Mapel</th>
+                                 <th class="text-nowrap">Guru</th>
                                  <th class="text-nowrap">Kelas</th>
-                                 <th style="width: 10%">Aksi</th>
+                                 <th class="text-nowrap">Mapel</th>
+                                 <th style="width: 15%">Aksi</th>
                                </tr>
                              </thead>
                              <tbody>
                              <?php 
                              $no = 1;
-                             foreach($list AS $l) :
-                                $kelas = explode(',', $l['kelas']);
+                             foreach($mengajar AS $m) :
                              ?>
                               <tr>
-                                <td><?=$no?></td>
-                                <td><?=ucwords($l['nama_mapel'])?></td>
-                                <td>
-                                <?php for($i=0; $i<count($kelas); $i++){
-                                    echo '<label class="btn btn-sm btn-info mr-2">'.$kelas[$i].'</label>';
-                                } ?>
-                                </td>
-                                <td><a href="javascript:void(0)" data-toggle="modal" id="<?=$l['kode_mapel']?>" data-target="#modal-update" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$l['kode_mapel']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
+                                <td><?=$no++?></td>
+                                <td><?=ucwords($m['nama'])?></td>
+                                <td><?=ucwords($m['nama_kelas'])?></td>
+                                <td><?php echo ucwords($m['nama_mapel'])?></td>
+                                <td><a href="javascript:void(0)" data-toggle="modal" id="<?=$m['id']?>" data-target="#modal-lg" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$m['id']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
                               </tr>
-                             <?php endforeach;?>
+                             <?php endforeach; ?>
                              </tbody>
                            </table>
                           </div>
@@ -69,41 +67,57 @@
                   </div>
               </div>
 
+              <!-- modal tambah -->
               <div class="modal fade" id="modal-add">
                <div class="modal-dialog modal-lg">
                  <div class="modal-content">
                    <div class="modal-header">
-                     <h4 class="modal-title">Tambah Konfigurasi</h4>
+                     <h4 class="modal-title">Tambah Guru Mengajar</h4>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
                      </button>
                    </div>
                    <div class="modal-body">
                          <!-- form start -->
-                      <form action="" method="post" role="form">
+                      <form action="<?= base_url('admin/mengajar/tambah') ?>" method="post" role="form">
                       <div class="row">
                         <div class="col-md-4">
                           <div class="form-group">
-                            <label for="guru">Pilih Mapel</label>
-                            <select name="mapel" id="guru" class="form-control select2bs4" data-placeholder="Pilih Mata Pelajaran"> 
+                            <label >Pilih Guru</label>
+                            <select name="guru" id="guru" class="form-control select2bs4" data-placeholder="Pilih Tenaga Pendidik">
                                 <option></option>
-                                <?php foreach($mapel AS $g) :?>
-                                <option value="<?=$g['kode_mapel']?>"><?=$g['nama_mapel']?></option>
-                                <?php endforeach; ?>
+                                <?php 
+                                foreach ($guru as $g) {
+                                  echo '<option value="'.$g['id_tenaga_kependidikan'].'">'.$g['nama'].'</option>';
+                                }
+                                 ?>
+              
                             </select>
-                            <small class="text-danger mt-2"><?= form_error('mapel') ?></small>
+                            <small class="text-danger mt-2"><?= form_error('status') ?></small>
                           </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                           <div class="form-group">
-                            <label for="kelas">Pilih Kelas</label>
-                            <select name="datakelas[]" id="kelas" class="form-control select2bs4" multiple="multiple" data-placeholder="Pilih Kelas" require> 
+                            <label >Pilih Kelas</label>
+                            <select name="kelas" id="kelas" class="form-control select2bs4" data-placeholder="Pilih kelas">
                                 <option></option>
-                                <?php foreach($kelas_list AS $k) :?>
-                                <option value="<?=$k['id_kelas']?>"><?=$k['nama_kelas']?></option>
-                                <?php endforeach; ?>
+                                <?php 
+                                foreach ($kelas as $k) {
+                                  echo '<option value="'.$k['id_kelas'].'">'.$k['nama_kelas'].'</option>';
+                                }
+                                 ?>
                             </select>
-                            <small class="text-danger mt-2"><?= form_error('kelas') ?></small>
+                            <small class="text-danger mt-2"><?= form_error('status') ?></small>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label >Pilih Mata Pelajaran</label>
+                            <select name="mapel" id="mapel" class="form-control select2bs4" data-placeholder="Pilih Mata Pelajaran">
+                                <option></option>
+                               
+                            </select>
+                            <small class="text-danger mt-2"><?= form_error('status') ?></small>
                           </div>
                         </div>
                       </div>
@@ -120,29 +134,24 @@
              </div>
              <!-- /.modal -->
 
-             <div class="modal fade" id="modal-update">
+              <div class="modal fade" id="modal-lg">
                <div class="modal-dialog">
                  <div class="modal-content">
                    <div class="modal-header">
-                     <h4 class="modal-title">Edit Mapel Kelas</h4>
+                     <h4 class="modal-title">Edit <span id="nama2"></span></h4>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
                      </button>
                    </div>
                    <div class="modal-body">
                          <!-- form start -->
-                      <form action="<?= base_url('admin/mapel/update_mapel_kelas') ?>" method="post" role="form">
-                        <input type="hidden" name="kode_mapel" id="kode_mapel_update" value="">
+                      <form action="<?= base_url('admin/kelas/update') ?>" method="post" role="form">
+                        <input type="hidden" name="id" id="id_kelas" value="">
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
                             <label for="kelas">Nama Kelas</label>
-                            <select name="kelas[]" id="kelas_update" class="form-control select2bs4" multiple="multiple" data-placeholder="Pilih Kelas"> 
-                                <option></option>
-                                <?php foreach($kelas_list AS $k) :?>
-                                <option value="<?=$k['id_kelas']?>"><?=$k['nama_kelas']?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input type="text" class="form-control" name="kelas" id="kelas_update" placeholder="Masukkan Nama Kelas" value="">
                             <small class="text-danger mt-2"><?= form_error('kelas') ?></small>
                           </div>
                         </div>
@@ -190,18 +199,26 @@
    });
 
 
-   $('.update').on('click', function() {
-     var dataId = this.id;
+   $('#kelas').on('change', function() {
+     var dataId = $('#kelas').val();
      $.ajax({
        type: "post",
-       url: "<?= base_url('admin/mapel/update_mapel_kelas') ?>",
+       url: "<?= base_url('admin/mengajar/get_kelas') ?>",
        data: {
-         'id_get_update': dataId
+         'id_kelas': dataId
        },
        dataType: "json",
-       success: function(data) {   
-          $('#kelas_update').val(data.id_kelas).change();
-          $('#kode_mapel_update').val(data.kode_mapel);  
+       success: function(data) {
+
+        var html = '<option></option>';
+        var i;
+
+        for(i=0; i < data.length; i++){
+          html += '<option value="'+data[i].kode_mapel+'">'+data[i].nama_mapel+'</option>'
+        }
+
+        $('#mapel').html(html);
+          
        },
      });
    });
@@ -210,8 +227,8 @@
      e.preventDefault();
      var dataId = this.id;
      Swal.fire({
-       title: 'Hapus Data Konfigurasi',
-       text: "Apakah anda yakin ingin menghapus data Konfigurasi ini?",
+       title: 'Hapus Data Guru Mengajar',
+       text: "Apakah anda yakin ingin menghapus data ini?",
        type: "warning",
        showCancelButton: true,
        confirmButtonColor: '#3085d6',
@@ -222,15 +239,15 @@
          if (isConfirm.value) {
            $.ajax({
              type: "post",
-             url: "<?= base_url() ?>admin/mapel/delete_konfigurasi/" + dataId,
+             url: "<?= base_url() ?>admin/mengajar/delete/" + dataId,
              data: {
                'id_kelas': dataId
              },
              success: function(respone) {
-               window.location.href = "<?= base_url('admin/mapel/mapel_kelas') ?>";
+               window.location.href = "<?= base_url('admin/mengajar') ?>";
              },
              error: function(request, error) {
-               window.location.href = "<?= base_url('admin/mapel/mapel_kelas') ?>";
+               window.location.href = "<?= base_url('admin/mengajar') ?>";
              },
            });
          } else {

@@ -10,19 +10,21 @@ class Home extends CI_Controller {
 
 	public function index(){
 		$data = [
-			'title' => 'Karitas Nandan'
+			'title' => ' SD Karitas Nandan'
 		];
 
-		$this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-		$this->form_validation->set_rules('nisn', 'NISN', 'required|trim|numeric|callback_cekNISN', ['cekNISN' => 'NISN sudah digunakan','required' => '{field} tidak boleh kosong', 'numeric' => '{field} hanya berupa angka']);
-		$this->form_validation->set_rules('agama', 'Agama', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+		$this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
+		if(!empty($this->input->post('nisn'))){
+			$this->form_validation->set_rules('nisn', 'NISN', 'required|trim|numeric|callback_cekNISN|min_length[5]', ['cekNISN' => 'NISN sudah digunakan','required' => '{field} tidak boleh kosong', 'numeric' => '{field} hanya berupa angka', 'min_length' => '{field} minimal 5 digit']);
+		}
+		$this->form_validation->set_rules('agama', 'Agama', 'required|trim|alpha', ['required' => '{field} tidak boleh kosong', 'alpha' => '{field} hanya berupa huruf']);
+		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|trim', ['required' => '{field} tidak boleh kosong']);
 		$this->form_validation->set_rules('gender', 'Jenis Kelamin', 'required|trim', ['required' => '{field} tidak boleh kosong']);
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-		$this->form_validation->set_rules('nama_ortu', 'Nama Orang Tua', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+		$this->form_validation->set_rules('nama_ortu', 'Nama Orang Tua', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
 		$this->form_validation->set_rules('telepon_ortu', 'Telepon Ortu', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-		$this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+		$this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
 		$this->form_validation->set_rules('penghasilan', 'Penghasilan Ortu', 'required|trim', ['required' => '{field} tidak boleh kosong']);
 		$this->form_validation->set_rules('alamat_ortu', 'Alamat Orang Ortu', 'required|trim', ['required' => '{field} tidak boleh kosong']);
 
@@ -62,14 +64,14 @@ class Home extends CI_Controller {
 
 			$no_pendaftaran = $tahun_now.'/'.$no_pendaftaran_last;
 
-			$data = [
-				'kode_pendaftaran' => $no_pendaftaran,
-				'nisn' => $this->input->post('nisn', true),
-				'id_tahun_ajaran' => $id_tahun_ajaran
-			];
-
+			if(!empty($this->input->post('nisn'))){
+				$nisn = $this->input->post('nisn', true);
+			}else{
+				$nisn = null;
+			}
+			//-kalasifikasi query database
 			$data_diri = [
-				'nisn' => $this->input->post('nisn', true),
+				'nisn' => $nisn,
 				'nama_siswa' => $this->input->post('nama', true),
 				'jenis_kelamin' => $this->input->post('gender'),
 				'id_kelas' => $kelas['id_kelas'],
@@ -88,6 +90,13 @@ class Home extends CI_Controller {
 			//insert data diri
 			$insertdatadiri = $this->db->insert('siswa', $data_diri);
 			if ($insertdatadiri) {
+				$id_siswa = $this->db->insert_id();
+
+				$data = [
+					'kode_pendaftaran' => $no_pendaftaran,
+					'id_siswa' => $id_siswa,
+					'id_tahun_ajaran' => $id_tahun_ajaran
+				];
 
 				//insert data diri
 				$insertPendaftaran = $this->db->insert('pendaftaran', $data);
@@ -105,10 +114,24 @@ class Home extends CI_Controller {
                 redirect('/');
 			}
 		}
-		
 	}
 
-	public function cekEmail($str){
+	public function pengumuman(){
+		$tahun_ajaran = $this->db->get_where('tahun_ajaran', ['tahun_mulai' => getTahun()])->row_array();
+		if(!empty($tahun_ajaran)){
+			$nama_tahun_ajaran = $tahun_ajaran['tahun_mulai']."/".$tahun_ajaran['tahun_akhir'];
+			$id_tahun_ajaran = $tahun_ajaran['id_tahun_ajaran'];
+		}else{
+			$id_tahun_ajaran = 1;
+		}
+		$data['title'] = 'Pengumuman';
+		$data['tahun_ajaran'] = $nama_tahun_ajaran;
+		$data['siswa'] = $this->db->query("SELECT * FROM `pendaftaran` JOIN siswa ON siswa.id_siswa=pendaftaran.id_siswa WHERE `id_tahun_ajaran` = $id_tahun_ajaran AND pendaftaran.status != 'menunggu'")->result_array();
+
+		$this->load->view('v_home/v_pengumuman', $data);
+	}
+
+	/*public function cekEmail($str){
 		$cek = $this->db->get_where('peserta', ['email_peserta' => $str])->num_rows();
 
 		if ($cek > 0) {
@@ -116,8 +139,13 @@ class Home extends CI_Controller {
 		}else{
 			return true;
 		}
+	}*/
+
+	public function cekHuruf($str){
+		return ( ! preg_match("/^([-a-z_ ])+$/i", $str)) ? FALSE : TRUE;
 	}
 
+/*
 	public function cekPassword($str){
 		$cek = strlen($str);
 		if ($cek <= 6) {
@@ -125,7 +153,7 @@ class Home extends CI_Controller {
 		}else{
 			return true;
 		}
-	}
+	}*/
 
 	public function cekNISN($str){
 		$cek = $this->db->get_where('siswa', ['nisn' => $str])->num_rows();

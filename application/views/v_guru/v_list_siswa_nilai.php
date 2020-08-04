@@ -127,7 +127,7 @@
                   var tombol = 'btn-primary';
                 }
 
-                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="<?=base_url()?>'+ link + data[i].nisn +'" class="btn btn-sm '+tombol+' mr-1 detail"><i class="fa fa-edit"></i> '+text+' Nilai</a></td></tr>'
+                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="<?=base_url()?>'+ link + data[i].id_siswa +'" class="btn btn-sm '+tombol+' mr-1 detail"><i class="fa fa-edit"></i> '+text+' Nilai</a></td></tr>'
                 no++;
               }
             } else {
@@ -168,7 +168,7 @@
                   var tombol = 'btn-primary';
                 }
 
-                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="<?=base_url()?>'+ link + data[i].nisn +'" class="btn btn-sm '+tombol+' mr-1 detail"><i class="fa fa-edit"></i> '+text+' Nilai</a></td></tr>'
+                  html += '<tr><td>'+no+'</td><td>' + data[i].nisn + '</td><td>' + data[i].nama_siswa + '</td><td>' + data[i].nama_kelas + '</td><td>'+ gender +'</td><td><a href="<?=base_url()?>'+ link + data[i].id_siswa +'" class="btn btn-sm '+tombol+' mr-1 detail"><i class="fa fa-edit"></i> '+text+' Nilai</a></td></tr>'
                 no++;
               }
             } else {

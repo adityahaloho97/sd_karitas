@@ -101,13 +101,13 @@
             <div class="card-footer">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="icheck-danger">
+                    <!-- <div class="icheck-danger">
                     <input type="checkbox" name="naik_kelas" id="naik">
                     <label for="naik" class="text-muted text-small">
                         <p>Siswa dinyatakan naik kelas</p>
                     </label>
                     </div>
-                    <small class="text-muted"><span style="color:red">*</span> pilih untuk naik kelas, biarkan kosong untuk tinggal kelas</small>
+                    <small class="text-muted"><span style="color:red">*</span> pilih untuk naik kelas, biarkan kosong untuk tinggal kelas</small> -->
                 </div>
                 <div class="col-md-6">
                     <button type="submit" id="simpan" class="btn btn-primary float-right">Simpan Penilain Siswa</button>
@@ -130,67 +130,36 @@
 
 <script>
     $('#simpan').click(function(e){
-        var nisn = $('#nisn').val();
+      var nisn = $('#nisn').val();
+
+      e.preventDefault();
         
-        if($('#naik').prop('checked') == true){
-            e.preventDefault();
-        
-            Swal.fire({
-            title: 'Siswa Dinyatakan Naik Kelas',
-            text: "Apakah anda yakin?",
-            type: "success",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Konfirmasi!'
-            }).then(
-            function(isConfirm) {
-                if (isConfirm.value) {
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url() ?>guru/nilai/input/<?=$this->uri->segment(4)?>",
-                    data: $('#formNilai').serialize(),
-                    success: function(respone) {
-                    window.location.href = "<?= base_url('guru/nilai/') ?><?=$this->uri->segment(4)?>";
-                    },
-                    error: function(request, error) {
-                    window.location.href = "<?= base_url('guru/nilai/input/') ?><?=$this->uri->segment(4)?>";
-                    },
-                });
-                } else {
-                swal("Cancelled", "Your imaginary file is safe :)", "error");
-                }
+        Swal.fire({
+        title: 'Pastikan Nilai yang diinputkan sudah sesuai',
+        text: "Apakah anda yakin?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Konfirmasi!'
+        }).then(
+        function(isConfirm) {
+            if (isConfirm.value) {
+            $.ajax({
+                type: "post",
+                url: "<?= base_url() ?>guru/nilai/input/<?=$this->uri->segment(4)?>",
+                data: $('#formNilai').serialize(),
+                success: function(respone) {
+                window.location.href = "<?= base_url('guru/nilai/') ?>";
+                },
+                error: function(request, error) {
+                window.location.href = "<?= base_url('guru/nilai/input/') ?><?=$this->uri->segment(4)?>";
+                },
             });
-        }else{
-            e.preventDefault();
-        
-            Swal.fire({
-            title: 'Siswa Dinyatakan Tinggal Kelas',
-            text: "Apakah anda yakin?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Konfirmasi!'
-            }).then(
-            function(isConfirm) {
-                if (isConfirm.value) {
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url() ?>guru/nilai/input/<?=$this->uri->segment(4)?>",
-                    data: $('#formNilai').serialize(),
-                    success: function(respone) {
-                    window.location.href = "<?= base_url('guru/nilai/input/') ?><?=$this->uri->segment(4)?>";
-                    },
-                    error: function(request, error) {
-                    window.location.href = "<?= base_url('guru/nilai/input/') ?><?=$this->uri->segment(4)?>";
-                    },
-                });
-                } else {
-                swal("Cancelled", "Your imaginary file is safe :)", "error");
-                }
-            });
-        }
+            } else {
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
         
     })
 
@@ -211,7 +180,7 @@
       "paging": false,
       "lengthChange": false,
       "searching": false,
-      "ordering": false,
+      "ordering": true,
       "info": true,
       "autoWidth": false,
     });

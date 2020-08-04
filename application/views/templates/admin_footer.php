@@ -1,9 +1,9 @@
 <!-- Main Footer -->
 <footer class="main-footer">
     <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Sistem Informasi Pendaftaran <a href="https://adminlte.io">V 1.0</a>
-    </div>
+    <!-- <div class="float-right d-none d-sm-inline">
+      Sistem Informasi Sekolah <a href="https://adminlte.io">V 1.0</a>
+    </div> -->
     <!-- Default to the left -->
     <strong>Copyright &copy; 2020 SD KARITAS NANDAN
 .</strong> All rights reserved.
@@ -39,7 +39,7 @@ $(function() {
 });
 </script>
 
-<script type="text/javascript">    
+<!-- <script type="text/javascript">    
     //fungsi untuk menampilkan jam saat ini    
         function tampilkanwaktu(){   
             var waktu = new Date();
@@ -48,7 +48,7 @@ $(function() {
             var ss = waktu.getSeconds() + "";  //memunculkan jam:menit:detik dengan menambahkan angka 0 jika angkanya cuma satu digit (0-9)
             document.getElementById("clock").innerHTML = (sh.length==1?"0"+sh:sh) + ":" + (sm.length==1?"0"+sm:sm) + ":" + (ss.length==1?"0"+ss:ss);
         }
-    </script>
+    </script> -->
 
 </body>
 </html>

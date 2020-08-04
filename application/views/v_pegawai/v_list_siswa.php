@@ -136,20 +136,21 @@
                       <td><?=$s['nama_kelas']?></td>
                       <td><?=$s['tahun_mulai']?>/<?=$s['tahun_akhir']?></td>
                       <td>
+                        
                         <?php
 
                         if ($s['status'] == 'terima') {
-                          echo '<label class="btn btn-sm btn-success">Diterima</label>';
+                          echo '<a href="javascript:void(0)" id="'.$s['id_siswa'].'" class="btn btn-sm btn-success edit-terima">Diterima</a>';
                         } elseif ($s['status'] == 'tolak') {
-                          echo '<label class="btn btn-sm btn-danger">Ditolak</label>';
+                          echo '<a href="javascript:void(0)" id="'.$s['id_siswa'].'" class="btn btn-sm btn-danger edit-tolak">Ditolak</a>';
                         } elseif ($s['status'] == 'menunggu') {
                           echo '<label class="btn btn-sm btn-default">Proses</label>';
                         }
                         ?>
 
                       </td>
-                      <td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-detail" id="<?=$s['nisn']?>" class="btn btn-sm btn-primary mr-1 detail"><i class="fa fa-eye"></i> Detail</a>
-                      <a href="<?= base_url('pegawai/siswa/edit/'.$s['nisn']) ?>" target="_blank" id="" class="btn btn-sm btn-success mr-1 update"><i class="fa fa-edit"></i></a>
+                      <td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-detail" id="<?=$s['id_siswa']?>" class="btn btn-sm btn-primary mr-1 detail"><i class="fa fa-eye"></i> Detail</a>
+                      <a href="<?= base_url('pegawai/siswa/edit/'.$s['id_siswa']) ?>" target="_blank" id="" class="btn btn-sm btn-success mr-1 update"><i class="fa fa-edit"></i></a>
                       </td>
                     </tr>
                   <?php
@@ -440,4 +441,68 @@
             };
         });
     });
+
+    $('.edit-terima').click(function(e){ 
+      var nisn = this.id;
+      e.preventDefault();
+        
+      Swal.fire({
+      title: 'Siswa Dinyatakan Diterima',
+      text: "Apakah anda yakin ingin mengubah status menjadi ditolak?",
+      type: "success",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Tolak!'
+      }).then(
+      function(isConfirm) {
+          if (isConfirm.value) {
+          $.ajax({
+              type: "post",
+              url: "<?= base_url() ?>pegawai/siswa/edit_status",
+              data: {'nisn' : nisn},
+              success: function(respone) {
+              window.location.href = "<?= base_url('pegawai/siswa/') ?>";
+              },
+              error: function(request, error) {
+              window.location.href = "<?= base_url('pegawai/siswa/') ?>";
+              },
+          });
+          } else {
+          swal("Cancelled", "Your imaginary file is safe :)", "error");
+          }
+      });
+    })
+
+    $('.edit-tolak').on('click', function(e){
+      var nisn = this.id;
+      e.preventDefault();
+        
+        Swal.fire({
+        title: 'Siswa Dinyatakan Ditolak',
+        text: "Apakah anda yakin ingin menerimanya",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Terima Siswa!'
+        }).then(
+        function(isConfirm) {
+            if (isConfirm.value) {
+            $.ajax({
+                type: "post",
+                url: "<?= base_url() ?>pegawai/siswa/edit_status",
+                data: {'nisn' : nisn},
+                success: function(respone) {
+                window.location.href = "<?= base_url('pegawai/siswa/') ?>";
+                },
+                error: function(request, error) {
+                window.location.href = "<?= base_url('pegawai/siswa/') ?>";
+                },
+            });
+            } else {
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+    })
 </script>

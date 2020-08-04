@@ -50,14 +50,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['alumni/auth'] = 'front/auth/login';
+/*$route['alumni/auth'] = 'front/auth/login';*/
 $route['admin'] = 'admin/auth/login';
+$route['pengumuman'] = 'home/pengumuman';
 $route['guru'] = 'guru/auth/login';
 $route['pegawai'] = 'pegawai/auth/login';
 $route['registrasi'] = 'front/registrasi';
-$route['event'] = 'front/event';
-$route['event/detail/(:any)'] = 'front/event/detail/$1';
-$route['lowongan/detail/(:any)'] = 'front/lowongan/detail/$1';
+/*$route['event'] = 'front/event';*/
+/*$route['event/detail/(:any)'] = 'front/event/detail/$1';
+$route['lowongan/detail/(:any)'] = 'front/lowongan/detail/$1';*/
 
 
 /* Home routing */

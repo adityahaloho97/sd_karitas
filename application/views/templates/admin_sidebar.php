@@ -30,9 +30,23 @@
     <img style="margin-left: 35%;" src="<?=base_url('assets/images/logo_sd.png')?>" height="50" alt="">
   </a>
 
-  <a href="" class="brand-link mx-auto">
+  <!-- <a href="" class="brand-link mx-auto">
     <span style="margin-left: 30%;" class="brand-text font-weight-light font-weight-bolder text-nowrap" id="clock"></span>
-  </a>
+  </a> -->
+
+  <?php
+
+  $id = $this->session->userdata('username');
+
+  $cek_hak = $this->db->get_where('tenaga_kependidikan', ['nip' => $id, 'hak_akses' => 'wali kelas'])->num_rows();
+
+  if($cek_hak > 0){
+    $role = 'Wali Kelas';
+  }else{
+    $role = ucwords($this->session->userdata('nama_role'));
+  }
+  ?>
+ 
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
@@ -46,7 +60,7 @@
       </div>
       <div class="info">
         <h5 class="text-nowrap d-block text-header text-white"><?= ucwords($this->session->userdata('nama')) ?></h5>
-        <span><small class="d-block text-muted"><?= ucwords($this->session->userdata('nama_role')) ?></small></span>
+        <span><small class="d-block text-muted"><?= $role?></small></span>
 
 
       </div>
@@ -55,31 +69,7 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-        <!--           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Starter Pages
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= base_url('admin/pengguna') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pengguna</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
+   
         <?php if ($this->session->userdata('role') == 1) { ?>
           <li class="nav-item">
             <a href="<?= base_url('admin/dashboard') ?>" class="nav-link <?= active('dashboard')?>">
@@ -91,10 +81,26 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('admin/tenaga_kependidikan') ?>" class="nav-link <?= active('tenaga_kependidikan')?>">
+            <a href="<?= base_url('admin/Tenaga_pendidik') ?>" class="nav-link <?= active('Tenaga_pendidik')?>">
               <i class="nav-icon fa fa-users"></i>
               <p>
-                Data GTK
+                Data Guru
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/pegawai') ?>" class="nav-link <?= active('pegawai')?>">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Data Pegawai
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/mengajar') ?>" class="nav-link <?= active('mengajar')?>">
+              <i class="nav-icon fa fa-check"></i>
+              <p>
+                Guru Mengajar
               </p>
             </a>
           </li>
@@ -103,6 +109,14 @@
               <i class="nav-icon fa fa-exclamation-circle"></i>
               <p>
                 Tahun Ajaran
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/kkm') ?>" class="nav-link <?= active('kkm')?>">
+              <i class="nav-icon fa fa-book"></i>
+              <p>
+                Data KKM
               </p>
             </a>
           </li>
@@ -161,7 +175,25 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
+          <?php if($role == 'Wali Kelas') :?>
+            <li class="nav-item">
+            <a href="<?= base_url('guru/naik_kelas') ?>" class="nav-link <?= active('naik_kelas')?>">
+              <i class="nav-icon fa fa-arrow-up"></i>
+              <p>
+                Naik Kelas
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('guru/raport') ?>" class="nav-link <?= active('raport')?>">
+              <i class="nav-icon fa fa-check"></i>
+              <p>
+                Raport Siswa
+              </p>
+            </a>
+          </li>
+          <?php endif; ?>
+          <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
@@ -189,7 +221,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
         <?php }else{ ?>
           <li class="nav-item">
             <a href="<?= base_url('pegawai/dashboard') ?>" class="nav-link <?= active('dashboard')?>">
@@ -208,7 +240,7 @@
             </a>
           </li>
 
-          <li class="nav-item has-treeview">
+          <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
@@ -236,7 +268,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
         <?php } ?>
       </ul>
     </nav>

@@ -95,6 +95,12 @@ class Mapel extends CI_controller
         if($this->form_validation->run() == FALSE){
             getViews($data,'v_admin/v_mapel_kelas');
         }else{
+            if(empty($this->input->post('datakelas'))){
+                $this->session->set_flashdata('msg_failed', 'Maaf, Harap pilih kelas terlebih dahulu');
+                redirect('admin/mapel/mapel_kelas');
+                return false;
+            }
+            
             $datakelas = $this->input->post('datakelas');
             $flag = true;
             for($i=0; $i<count($datakelas); $i++){

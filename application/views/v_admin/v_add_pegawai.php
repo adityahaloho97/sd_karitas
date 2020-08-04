@@ -10,8 +10,8 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard')?>">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?= base_url('admin/tenaga_kependidikan')?>">Daftar GTK</a></li>
-              <li class="breadcrumb-item active">Perbarui</li>
+              <li class="breadcrumb-item"><a href="<?= base_url('admin/pegawai')?>">Daftar Pegawai</a></li>
+              <li class="breadcrumb-item active">Tambah</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,45 +28,45 @@
             <!-- general form elements -->
             <div class="card card-default ">
               <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-user-plus"></i> Perbarui GTK</h3>
+                <h3 class="card-title"><i class="fa fa-user-plus"></i> Tambah Pegawai</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form action="" method="post" role="form" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="nama">Nama Lengkap <span class="text-danger">*</span> </label>
-                                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Lengkap" value="<?= !empty($gtk['nama'])?$gtk['nama']:set_value('nama')?>" required>
+                                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Lengkap" value="<?= set_value('nama')?>" required>
                                 <small class="text-danger mt-2"><?= form_error('nama') ?></small>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <div class="form-group">
                                 <label >Status GTK</label>
-                                <select name="status" id="status" class="form-control select2bs4" data-placeholder="Pilih Status GTK" disabled>
+                                <select name="status" id="status" class="form-control select2bs4" data-placeholder="Pilih Status GTK">
                                     <option></option>
-                                    <option value="guru" <?php if($gtk['hak_akses'] == 'guru'){echo 'selected';} ?>>Guru</option>
-                                    <option value="pegawai" <?php if($gtk['hak_akses'] == 'pegawai'){echo 'selected';} ?>>Pegawai</option>
+                                    <option value="guru">Guru</option>
+                                    <option value="pegawai">Pegawai</option>
                                 </select>
                                 <small class="text-danger mt-2"><?= form_error('status') ?></small>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nip">NIP <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="nip" id="nip" placeholder="Masukkan NIP" value="<?php echo !empty($gtk['nip'])?$gtk['nip']:set_value('nip') ?>">
+                                <input type="text" class="form-control" name="nip" id="nip" placeholder="Masukkan NIP" value="<?php echo set_value('nip') ?>">
                                 <small class="text-danger mt-2"><?= form_error('nip') ?></small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nik">NIK <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukkan NIK" value="<?php echo !empty($gtk['nik'])?$gtk['nik']:set_value('nik') ?>">
+                                <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukkan NIK" value="<?php echo set_value('nik') ?>">
                                 <small class="text-danger mt-2"><?= form_error('nik') ?></small>
                             </div>
                         </div>
@@ -75,11 +75,11 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Jenis Kelamin <span class="text-danger">*</span></label>
                         <div class="custom-control custom-radio">
-                            <input class="custom-control-input" value="L" type="radio" id="male" name="gender" <?php if($gtk['kelamin'] == 'L'){echo 'checked';} ?> >
+                            <input class="custom-control-input" value="L" type="radio" id="male" name="gender">
                             <label for="male" class="custom-control-label">Laki - Laki</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input class="custom-control-input" value="P" type="radio" id="female" name="gender" <?php if($gtk['kelamin'] == 'P'){echo 'checked';} ?>>
+                            <input class="custom-control-input" value="P" type="radio" id="female" name="gender">
                             <label for="female" class="custom-control-label">Perempuan</label>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="visi">Tempat Lahir <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="tempat_lahir" id="nama" placeholder="Masukkan Tempat Lahir" value="<?php echo !empty($gtk['tempat_lahir'])?$gtk['tempat_lahir']:set_value('tempat_lahir')?>">
+                                <input type="text" class="form-control" name="tempat_lahir" id="nama" placeholder="Masukkan Tempat Lahir" value="<?php echo set_value('tempat_lahir')?>">
                                 <small class="text-danger mt-2"><?= form_error('tempat_lahir') ?></small>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="tgl_lahir" class="form-control float-right" placeholder="Pilih tanggal" id="datepicker1" value="<?php echo !empty($gtk['tanggal_lahir'])?DateTime::createFromFormat('Y-m-d', $gtk['tanggal_lahir'])->format('m/d/Y'):set_value('tanggal_lahir') ?>">
+                                    <input type="text" name="tgl_lahir" class="form-control float-right" placeholder="Pilih tanggal" id="datepicker1" value="<?php echo set_value('tanggal_lahir') ?>">
                                 </div>
                                 <!-- /.input group -->
                                 <small class="text-danger mt-2"><?= form_error('tgl_lahir') ?></small>
@@ -112,14 +112,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nama">No Telpon</label>
-                                <input type="text" class="form-control" name="telp" id="nama" placeholder="Masukkan No Telp" value="<?php echo !empty($gtk['telepon'])?$gtk['telepon']:set_value('telp') ?>">
+                                <input type="text" class="form-control" name="telp" id="nama" placeholder="Masukkan No Telp" value="<?php echo set_value('telp') ?>">
                                 <small class="text-danger mt-2"><?= form_error('telp') ?></small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="agama">Agama <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="agama" id="agama" placeholder="Masukkan Agama" value="<?php echo !empty($gtk['agama'])?$gtk['agama']:set_value('agama')?>">
+                                <input type="text" class="form-control" name="agama" id="agama" placeholder="Masukkan Agama" value="<?php echo set_value('agama')?>">
                                 <small class="text-danger mt-2"><?= form_error('agama') ?></small>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
 
                     <div class="form-group">
                         <label for="misi">Alamat Rumah <span class="text-danger">*</span></label>
-                        <textarea id="misi" name="alamat" class="form-control" style="height: 150px;" placeholder="Masukkan Alamat Rumah"><?php echo !empty($gtk['alamat'])?$gtk['alamat']:set_value('alamat') ?></textarea>
+                        <textarea id="misi" name="alamat" class="form-control" style="height: 150px;" placeholder="Masukkan Alamat Rumah"><?php echo set_value('alamat') ?></textarea>
                         <small class="text-danger mt-2"><?= form_error('alamat') ?></small>
                     </div>
 
@@ -158,7 +158,7 @@
                         </div>
                         </div>
                     </div>
-                    <img class="mt-2 mb-2 img-preview" src="<?= base_url()?>assets/img/user/<?=!empty($gtk['foto'])?$gtk['foto']:'default.png'?>" id="output">
+                    <img class="mt-2 mb-2 img-preview" src="<?=base_url('assets/img/user/default.png')?>" id="output">
                 </div>
                 <!-- /.card-body -->
 

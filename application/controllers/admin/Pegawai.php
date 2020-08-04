@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * 
  */
-class Tenaga_kependidikan extends CI_controller
+class Pegawai extends CI_controller
 {
 
     function __construct()
@@ -17,25 +17,25 @@ class Tenaga_kependidikan extends CI_controller
 
     public function index(){
     	$data = [
-            'title' => 'Daftar Tenaga Kependidikan',
-            'gtk' => $this->m_gtk->getAllGtk()
+            'title' => 'Daftar Pegawai',
+            'gtk' => $this->m_gtk->getAllPegawai()
     	];
 
-    	getViews($data,'v_admin/v_guru');
+    	getViews($data,'v_admin/v_pegawai');
     }
 
     public function tambah(){
         $data = [
-            'title' => 'Tambah Tenaga Kependidikan'
+            'title' => 'Tambah Pegawai'
         ];
 
-    	$this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', ['required' => 'Nama tidak boleh kosong']);
+    	$this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim|callback_cekHuruf', ['required' => 'Nama tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
         $this->form_validation->set_rules('nip', 'NIP', 'trim|numeric|callback_CekNIP', ['numeric' => '{field} harus berupa angka', 'CekNIP' => '{field} sudah digunakan']);
         $this->form_validation->set_rules('nik', 'NIK', 'trim|numeric|callback_CekNIK', ['numeric' => '{field} harus berupa angka', 'CekNIK' => '{field} sudah digunakan']);
         $this->form_validation->set_rules('telp', 'No Telp', 'numeric|trim', ['numeric' => '{field} harus berupa angka']);
-        $this->form_validation->set_rules('status', 'Status GTK', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+      //  $this->form_validation->set_rules('status', 'Status GTK', 'required|trim', ['required' => '{field} tidak boleh kosong']);
         $this->form_validation->set_rules('gender', 'Jenis Kelamin', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-        $this->form_validation->set_rules('agama', 'Agama', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+        $this->form_validation->set_rules('agama', 'Agama', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
         $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|trim', ['required' => '{field} tidak boleh kosong']);
         $this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|trim', ['required' => '{field} tidak boleh kosong']);
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', ['required' => '{field} tidak boleh kosong']);
@@ -43,7 +43,7 @@ class Tenaga_kependidikan extends CI_controller
 		$this->form_validation->set_rules('password1', 'Konfirmasi Password', 'required|matches[password]', ['required' => '{field} tidak boleh kosong', 'matches' => '{field} tidak sama']);
 
     	if ($this->form_validation->run() == FALSE) {
-    		getViews($data,'v_admin/v_add_guru');
+    		getViews($data,'v_admin/v_add_pegawai');
     	}else{
             $tgl = $this->input->post('tgl_lahir', true);
             $tgl = DateTime::createFromFormat('m/d/Y', $tgl)->format('Y-m-d');
@@ -65,16 +65,16 @@ class Tenaga_kependidikan extends CI_controller
                 'agama' => $this->input->post('agama', true),
                 'alamat' => $this->input->post('alamat', true),
                 'telepon' => $this->input->post('telp', true),
-                'hak_akses' => $this->input->post('status', true),
+                'hak_akses' => 'pegawai',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT)
     		];
 
     		if (insertData('tenaga_kependidikan', $data)) {
     			$this->session->set_flashdata('msg_success', 'Selamat, data berhasil ditambahkan');
-                redirect('admin/tenaga_kependidikan');
+                redirect('admin/pegawai');
     		}else{
     			$this->session->set_flashdata('msg_failed', 'Maaf, data gagal ditambahkan');
-                redirect('admin/tenaga_kependidikan/tambah');
+                redirect('admin/pegawai/tambah');
     		}
     	}
     }
@@ -85,21 +85,21 @@ class Tenaga_kependidikan extends CI_controller
         //cek valid id
         if($this->db->get_where('tenaga_kependidikan', ['id_tenaga_kependidikan' => $id])->num_rows() == 0){
             $this->session->set_flashdata('msg_failed', 'Maaf, data tidak cocok');
-            redirect('admin/tenaga_kependidikan');
+            redirect('admin/pegawai');
         }else{
             $data = [
-                'title' => 'Perbarui Tenaga Kependidikan',
+                'title' => 'Perbarui Pegawai',
                 'gtk' => $this->db->get_where('tenaga_kependidikan', ['id_tenaga_kependidikan' => $id])->row_array()
             ];
             
-            $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', ['required' => 'Nama tidak boleh kosong']);
+            $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim|callback_cekHuruf', ['required' => 'Nama tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
             $this->form_validation->set_rules('nip', 'NIP', 'trim|numeric', ['numeric' => '{field} harus berupa angka', 'CekNIP' => '{field} sudah digunakan']);
             $this->form_validation->set_rules('nik', 'NIK', 'trim|numeric', ['numeric' => '{field} harus berupa angka', 'CekNIK' => '{field} sudah digunakan']);
             $this->form_validation->set_rules('telp', 'No Telp', 'numeric|trim', ['numeric' => '{field} harus berupa angka']);
-            $this->form_validation->set_rules('status', 'Status GTK', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+          //  $this->form_validation->set_rules('status', 'Status GTK', 'required|trim', ['required' => '{field} tidak boleh kosong']);
             $this->form_validation->set_rules('gender', 'Jenis Kelamin', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-            $this->form_validation->set_rules('agama', 'Agama', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-            $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|trim', ['required' => '{field} tidak boleh kosong']);
+            $this->form_validation->set_rules('agama', 'Agama', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
+            $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|trim|callback_cekHuruf', ['required' => '{field} tidak boleh kosong', 'cekHuruf' => '{field} hanya berupa huruf']);
             $this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|trim', ['required' => '{field} tidak boleh kosong']);
             $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', ['required' => '{field} tidak boleh kosong']);
 
@@ -109,7 +109,7 @@ class Tenaga_kependidikan extends CI_controller
             }
 
             if ($this->form_validation->run() == FALSE) {
-                getViews($data,'v_admin/v_edit_guru');
+                getViews($data,'v_admin/v_edit_pegawai');
             }else{
 
                 if (!empty($_FILES['foto']['name'])) {
@@ -141,7 +141,7 @@ class Tenaga_kependidikan extends CI_controller
                         'agama' => $this->input->post('agama', true),
                         'alamat' => $this->input->post('alamat', true),
                         'telepon' => $this->input->post('telp', true),
-                        'hak_akses' => $this->input->post('status', true),
+                        'hak_akses' => 'pegawai',
                         'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT)
                     ];
                 }else{
@@ -156,16 +156,16 @@ class Tenaga_kependidikan extends CI_controller
                         'agama' => $this->input->post('agama', true),
                         'alamat' => $this->input->post('alamat', true),
                         'telepon' => $this->input->post('telp', true),
-                        'hak_akses' => $this->input->post('status', true)
+                       'hak_akses' => 'pegawai'
                     ];
                 }
 
                 if ($this->db->update('tenaga_kependidikan', $data, ['id_tenaga_kependidikan' => $id])) {
                     $this->session->set_flashdata('msg_success', 'Selamat, data berhasil diperbarui');
-                    redirect('admin/tenaga_kependidikan');
+                    redirect('admin/pegawai');
                 }else{
                     $this->session->set_flashdata('msg_failed', 'Maaf, data gagal diperbarui');
-                    redirect('admin/tenaga_kependidikan');
+                    redirect('admin/pegawai');
                 }
             }
         }
@@ -183,87 +183,9 @@ class Tenaga_kependidikan extends CI_controller
     	}
     }
 
-    public function guru_kelas(){
-        $data = [
-            'title' => 'Konfigurasi Guru Kelas',
-            'gurus' => $this->db->get_where('tenaga_kependidikan', ['hak_akses' => 'guru'])->result_array(),
-            'kelas_list' => $this->db->get('kelas')->result_array(),
-            'list' => $this->db->query("SELECT guru_kelas.id_guru_kelas, guru.id_tenaga_kependidikan, guru.nama, guru.nip, GROUP_CONCAT(kelas.nama_kelas) AS kelas FROM `guru_kelas` JOIN tenaga_kependidikan AS guru ON guru.id_tenaga_kependidikan=guru_kelas.id_gtk JOIN kelas ON kelas.id_kelas=guru_kelas.id_kelas GROUP BY guru.id_tenaga_kependidikan")->result_array()
-        ];
-
-        $this->form_validation->set_rules('guru', 'Guru', 'required|trim', ['required' => '{field} tidak boleh kosong']);
-
-        if($this->form_validation->run() == FALSE){
-            getViews($data,'v_admin/v_guru_kelas');
-        }else{
-            $kelas = $this->input->post('kelas');
-            $flag = true;
-            for($i=0; $i<count($kelas); $i++){
-                $data = [
-                    'id_gtk' => $this->input->post('guru'),
-                    'id_kelas' => $kelas[$i]
-                ];
-
-                if(!$this->db->insert('guru_kelas', $data)){
-                    $flag = false;
-                }
-            }
-
-            if($flag){
-                $this->session->set_flashdata('msg_success', 'Selamat, data berhasil diperbarui');
-                redirect('admin/tenaga_kependidikan/guru_kelas');
-            }else{
-                $this->session->set_flashdata('msg_failed', 'Maaf, data gagal diperbarui');
-                redirect('admin/tenaga_kependidikan/guru_kelas');
-            }
-        }
-        
-    }
-
-    public function update_guru_kelas(){
-        if(isset($_POST['id_get_update'])){
-            $data_kelas = $this->db->get_where('guru_kelas', ['id_gtk' => $this->input->post('id_get_update')])->result_array();
-
-            foreach($data_kelas AS $kelas){
-                $id_kelas[] = $kelas['id_kelas'];
-            }
-
-            $data = [
-                'id_gtk' => $data_kelas[0]['id_gtk'],
-                'id_kelas' => $id_kelas
-            ];
-
-            echo json_encode($data);
-        }elseif(isset($_POST['perbarui'])){
-            $delete = $this->db->delete('guru_kelas', ['id_gtk' => $this->input->post('id_gtk')]);
-
-            if($delete){
-                $kelas = $this->input->post('kelas');
-                $flag = true;
-                for($i=0; $i<count($kelas); $i++){
-                    $data = [
-                        'id_gtk' => $this->input->post('id_gtk'),
-                        'id_kelas' => $kelas[$i]
-                    ];
-    
-                    if(!$this->db->insert('guru_kelas', $data)){
-                        $flag = false;
-                    }
-                }
-    
-                if($flag){
-                    $this->session->set_flashdata('msg_success', 'Selamat, data berhasil diperbarui');
-                    redirect('admin/tenaga_kependidikan/guru_kelas');
-                }else{
-                    $this->session->set_flashdata('msg_failed', 'Maaf, data gagal diperbarui');
-                    redirect('admin/tenaga_kependidikan/guru_kelas');
-                }
-            }else{
-                $this->session->set_flashdata('msg_failed', 'Maaf, data gagal diperbarui');
-                redirect('admin/tenaga_kependidikan/guru_kelas');
-            }
-        }
-    }
+    public function cekHuruf($str){
+		return ( ! preg_match("/^([-a-z_ ])+$/i", $str)) ? FALSE : TRUE;
+	}
 
     public function cekPassword($str){
 		$cek = strlen($str);

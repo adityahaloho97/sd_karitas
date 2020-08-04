@@ -21,29 +21,29 @@ class Siswa extends CI_controller
     {
         $id_tahun =  getIdTahun(getTahun());
         $data['title'] = 'Pendaftaran Siswa';
-        $total_pendaftar = $this->db->get('pendaftaran')->num_rows();
-        $total_terima = $this->db->get_where('pendaftaran', ['status' => 'terima'])->num_rows();
-        $total_tolak = $this->db->get_where('pendaftaran', ['status' => 'tolak'])->num_rows();
-        $total_proses = $this->db->get_where('pendaftaran', ['status' => 'menunggu'])->num_rows();
+        $total_pendaftar = $this->db->get_where('pendaftaran', ['id_tahun_ajaran' => $id_tahun])->num_rows();
+        $total_terima = $this->db->get_where('pendaftaran', ['status' => 'terima', 'id_tahun_ajaran' => $id_tahun])->num_rows();
+        $total_tolak = $this->db->get_where('pendaftaran', ['status' => 'tolak', 'id_tahun_ajaran' => $id_tahun])->num_rows();
+        $total_proses = $this->db->get_where('pendaftaran', ['status' => 'menunggu', 'id_tahun_ajaran' => $id_tahun])->num_rows();
         $data['total'] = [$total_pendaftar, $total_terima, $total_tolak, $total_proses];
         $data['tahun_ajaran'] = $this->db->get_where('tahun_ajaran', ['id_tahun_ajaran' => getIdTahun(getTahun())])->row_array();
-        $data['siswa'] = $this->db->query("SELECT * FROM `siswa` JOIN pendaftaran ON pendaftaran.nisn=siswa.nisn JOIN tahun_ajaran ON tahun_ajaran.id_tahun_ajaran=pendaftaran.id_tahun_ajaran JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE pendaftaran.status != 'menunggu' AND pendaftaran.id_tahun_ajaran = $id_tahun")->result_array();
+        $data['siswa'] = $this->db->query("SELECT * FROM `siswa` JOIN pendaftaran ON pendaftaran.id_siswa=siswa.id_siswa JOIN tahun_ajaran ON tahun_ajaran.id_tahun_ajaran=pendaftaran.id_tahun_ajaran JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE pendaftaran.status != 'menunggu' AND pendaftaran.id_tahun_ajaran = $id_tahun")->result_array();
         getViews($data, 'v_pegawai/v_list_siswa');
     }
 
     public function get_peserta(){
         $id_tahun =  getIdTahun(getTahun());
 
-        $data = $this->db->query("SELECT pendaftaran.id_pendaftaran, siswa.nama_siswa, siswa.nisn, siswa.jenis_kelamin, pendaftaran.kode_pendaftaran FROM `pendaftaran` JOIN siswa ON siswa.nisn=pendaftaran.nisn WHERE pendaftaran.id_tahun_ajaran = $id_tahun AND pendaftaran.status = 'menunggu' ORDER BY siswa.nisn DESC")->result_array();
+        $data = $this->db->query("SELECT pendaftaran.id_pendaftaran, siswa.nama_siswa, siswa.nisn, siswa.jenis_kelamin, pendaftaran.kode_pendaftaran FROM `pendaftaran` JOIN siswa ON siswa.id_siswa=pendaftaran.id_siswa WHERE pendaftaran.id_tahun_ajaran = $id_tahun AND pendaftaran.status = 'menunggu' ORDER BY siswa.nisn DESC")->result_array();
 
         echo json_encode($data);
     }
 
-    public function edit($nisn){
+    public function edit($id_siswa){
         $data = [
             "title" => "Perbarui Siswa",
             'kelas' => $this->db->get('kelas')->result_array(),
-            'siswa' => $this->db->get_where('siswa', ['nisn' => $nisn])->row_array()
+            'siswa' => $this->db->get_where('siswa', ['id_siswa' => $id_siswa])->row_array()
         ];
 
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', ['required' => '{field} tidak boleh kosong']);
@@ -80,7 +80,7 @@ class Siswa extends CI_controller
 				'penghasilan_ortu' => $this->input->post('penghasilan_ortu')
             ];
             
-            if($this->db->update('siswa', $data_diri, ['nisn' => $nisn])){
+            if($this->db->update('siswa', $data_diri, ['id_siswa' => $id_siswa])){
                 $this->session->set_flashdata('msg_success', 'Selamat, Data siswa berhasil diperbarui');
 				redirect('pegawai/siswa');
             }else{
@@ -92,9 +92,9 @@ class Siswa extends CI_controller
 
     public function detail(){
         if(isset($_POST['nisn']) && !empty($_POST['nisn'])){
-            $nisn = $this->input->post('nisn');
+            $id_siswa = $this->input->post('nisn');
 
-            $siswa = $this->db->query("SELECT * FROM `siswa` JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE siswa.nisn = $nisn")->row_array();
+            $siswa = $this->db->query("SELECT * FROM `siswa` JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE siswa.id_siswa = $id_siswa")->row_array();
             if(!empty($siswa['jenis_kelamin'])){
                 switch($siswa['jenis_kelamin']){
                     case 'L' :
@@ -197,7 +197,7 @@ class Siswa extends CI_controller
 
         $id_tahun = getIdTahun(getTahun());
 
-        $query = $this->db->query("SELECT * FROM `pendaftaran` JOIN siswa ON siswa.nisn=pendaftaran.nisn WHERE $where AND id_tahun_ajaran = $id_tahun AND pendaftaran.status = 'terima' ORDER BY pendaftaran.`nisn`");
+        $query = $this->db->query("SELECT * FROM `pendaftaran` JOIN siswa ON siswa.id_siswa=pendaftaran.id_siswa WHERE $where AND id_tahun_ajaran = $id_tahun AND pendaftaran.status = 'terima' ORDER BY pendaftaran.`id_siswa`");
         $data['pendaftar'] = $query->result_array();
         $data['tahun_ajaran'] = $this->db->get_where('tahun_ajaran', ['id_tahun_ajaran' => $id_tahun])->row_array();
 
@@ -206,6 +206,34 @@ class Siswa extends CI_controller
         $this->pdf->setPaper('A4', 'landscape');
         $this->pdf->filename = "laporan_pendaftaran.pdf";
         $this->pdf->load_view('v_pegawai/v_laporan_siswa', $data);
+    }
+
+    public function edit_status(){
+        if(isset($_POST['nisn'])){
+            //get status sebelumnya
+            $status = $this->db->get_where('pendaftaran', ['id_siswa' => $this->input->post('nisn')])->row_array();
+
+            if($status['status'] == 'terima'){
+                //ubah statusnya
+                $data = [
+                    'status' => 'tolak'
+                ];
+            }else{
+                $data = [
+                    'status' => 'terima'
+                ];
+            }
+
+            $update = $this->db->update('pendaftaran', $data, ['id_siswa' => $this->input->post('nisn')]);
+
+            if($update){
+                $this->session->set_flashdata('msg_success', 'Selamat, data siswa berhasil diubah');
+    		    http_response_code(200);
+            }else{
+                $this->session->set_flashdata('msg_failed', 'Maaf, data siswa gagal diubah');
+    		    http_response_code(400);
+            }
+        }
     }
 
 }

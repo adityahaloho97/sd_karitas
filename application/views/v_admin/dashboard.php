@@ -30,12 +30,12 @@
               <div class="inner">
                 <h3><?=$total[0]?></h3>
 
-                <p>Data Tenaga Kependidikan</p>
+                <p>Data Tenaga Pendidik</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-stalker"></i>
               </div>
-              <a href="<?= base_url('admin/tenaga_kependidikan') ?>" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?= base_url('admin/Tenaga_pendidik') ?>" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
