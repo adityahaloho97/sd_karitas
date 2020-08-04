@@ -184,6 +184,8 @@ class Tenaga_pendidik extends CI_controller
     }
 
     public function guru_kelas(){
+
+
         $data = [
             'title' => 'Konfigurasi Wali Kelas',
             'gurus' => $this->db->get_where('tenaga_kependidikan', ['hak_akses' => 'wali kelas'])->result_array(),
@@ -197,15 +199,22 @@ class Tenaga_pendidik extends CI_controller
             getViews($data,'v_admin/v_guru_kelas');
         }else{
             $kelas = $this->input->post('kelas');
+            $id_gtk = $this->input->post('guru');
             $flag = true;
             for($i=0; $i<count($kelas); $i++){
-                $data = [
-                    'id_gtk' => $this->input->post('guru'),
-                    'id_kelas' => $kelas[$i]
-                ];
-
-                if(!$this->db->insert('guru_kelas', $data)){
+                //cek duplikat data
+                $cekData = $this->db->query("SELECT * FROM `guru_kelas` WHERE `id_kelas` = $kelas[$i]")->num_rows();
+                if ($cekData > 0) {
                     $flag = false;
+                }else{
+                    $data = [
+                        'id_gtk' => $this->input->post('guru'),
+                        'id_kelas' => $kelas[$i]
+                    ];
+
+                    if(!$this->db->insert('guru_kelas', $data)){
+                        $flag = false;
+                    }
                 }
             }
 

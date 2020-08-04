@@ -37,19 +37,29 @@ class Mengajar extends CI_controller
     		$this->session->set_flashdata('msg_failed', 'Maaf, data gagal ditambahkan');
             redirect('admin/mengajar');
     	}else{
-    		$data = [
-                'id_guru' =>  $this->input->post('guru', true),
-    			'id_kelas' => $this->input->post('kelas', true),
-                'kode_mapel' => $this->input->post('mapel', true)
-    		];
+            $id_kelas = $this->input->post('kelas', true);
+            $kode_mapel = $this->input->post('mapel', true);
+            //cek data
+            $cekData = $this->db->query("SELECT * FROM `guru_mengajar` WHERE `id_kelas` = $id_kelas AND `kode_mapel` = '$kode_mapel'")->num_rows();
+            if ($cekData > 0) {
+                $this->session->set_flashdata('msg_failed', 'Maaf, mapel dan kelas sudah diajar');
+                    redirect('admin/mengajar');
+            }else{
+                $data = [
+                    'id_guru' =>  $this->input->post('guru', true),
+                    'id_kelas' => $this->input->post('kelas', true),
+                    'kode_mapel' => $this->input->post('mapel', true)
+                ];
 
-    		if (insertData('guru_mengajar', $data)) {
-    			$this->session->set_flashdata('msg_success', 'Selamat, data berhasil ditambahkan');
-                redirect('admin/mengajar');
-    		}else{
-    			$this->session->set_flashdata('msg_failed', 'Maaf, data gagal ditambahkan');
-                redirect('admin/mengajar');
-    		}
+                if (insertData('guru_mengajar', $data)) {
+                    $this->session->set_flashdata('msg_success', 'Selamat, data berhasil ditambahkan');
+                    redirect('admin/mengajar');
+                }else{
+                    $this->session->set_flashdata('msg_failed', 'Maaf, data gagal ditambahkan');
+                    redirect('admin/mengajar');
+                }
+            }
+    		
     	}
     }
 
