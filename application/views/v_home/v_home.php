@@ -115,8 +115,8 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Nama Lengkap <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="nama" type="text" placeholder="Masukkan Nama Lengkap" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama')?>" />
-                                            <small class="text-danger"><?= form_error('nama') ?></small>
+                                            <input class="form-control" id="ampas" name="nama" type="text" placeholder="Masukkan Nama Lengkap" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama')?>" onkeyup="angka(this)" />
+                                            <small class="text-danger"> <span id="ampas_error"></span><?= form_error('nama') ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                                         <div class="form-group mb-0 pb-2">
                                             <label>NISN </label>
                                             
-                                            <input class="form-control" id="name" name="nisn" type="text" placeholder="NISN" data-validation-required-message="Please enter your name." value="<?php echo set_value('nisn')?>" />
+                                            <input class="form-control" id="nisn" name="nisn" type="text" placeholder="NISN" data-validation-required-message="Please enter your name." value="<?php echo set_value('nisn')?>" />
                                             <small>belum memiliki NISN kosongkan</small>
                                             <small class="text-danger"><?= form_error('nisn') ?></small>
                                         </div>
@@ -316,6 +316,14 @@
 
         <!-- Core theme JS-->
         <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
+
+        <script>
+            function angka(e){
+                if ($('#ampas').val() == 1) {
+                    return $('ampas_error').text('hanya angka')
+                }
+            }
+        </script>
 
         <script>
         $(function() {
