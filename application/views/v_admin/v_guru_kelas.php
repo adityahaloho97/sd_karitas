@@ -47,6 +47,7 @@
                              <?php 
                              $no = 1;
                              foreach($list AS $l) :
+
                                 $kelas = explode(',', $l['kelas']);
                              ?>
                               <tr>
@@ -58,7 +59,7 @@
                                     echo '<label class="btn btn-sm btn-info mr-2">'.$kelas[$i].'</label>';
                                 } ?>
                                 </td>
-                                <td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-update" id="<?=$l['id_tenaga_kependidikan']?>" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$l['id_tenaga_kependidikan']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
+                                <td><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-update" id="<?=$l['id_tenaga_kependidikan']?>" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$l['id_gtk']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
                               </tr>
                              <?php endforeach; ?>
                              </tbody>
@@ -213,7 +214,7 @@
      var dataId = this.id;
      Swal.fire({
        title: 'Hapus Data GTK',
-       text: "Apakah anda yakin ingin menghapus data GTK ini?",
+       text: "Apakah anda yakin ingin menghapus data Wali Kelas ini?",
        type: "warning",
        showCancelButton: true,
        confirmButtonColor: '#3085d6',
@@ -229,10 +230,10 @@
                'id_kelas': dataId
              },
              success: function(respone) {
-               window.location.href = "<?= base_url('admin/Tenaga_pendidik') ?>";
+               window.location.href = "<?= base_url('admin/Tenaga_pendidik/guru_kelas') ?>";
              },
              error: function(request, error) {
-               window.location.href = "<?= base_url('admin/Tenaga_pendidik') ?>";
+               window.location.href = "<?= base_url('admin/Tenaga_pendidik/guru_kelas') ?>";
              },
            });
          } else {

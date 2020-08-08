@@ -104,16 +104,16 @@
                     </div>
                     <!-- Footer Social Icons-->
                     <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4">Sosial Media</h4>
+                        <!-- <h4 class="text-uppercase mb-4">Sosial Media</h4>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-instagram"></i></a> -->
                     </div>
                     <!-- Footer About Text-->
                     <div class="col-lg-4">
                         <h4 class="text-uppercase mb-4">Semboyan Kami</h4>
-                        <p class="lead mb-0">Deus Caritas Est <br> (Allah adalah cinta kasih)</a>.</p>
+                        <p class="lead mb-0">Deus Caritas Est <br> (Allah adalah cinta kasih)</a></p>
                     </div>
                 </div>
             </div>
@@ -145,58 +145,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
         <script>
-        $(function() {
-            //Date picker
-            $('#datepicker').datepicker({
-            autoclose: true
-            })
-        });
-
         $(document).ready(function() {
             $('#example').DataTable();
         } );
-        </script>
-
-        <!-- Core theme JS-->
-        <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
-
-        <script>
-        $(function() {
-            const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 4000
-            });
-            });
-        </script>
-
-        <script>
-        $(function() {
-            const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 4000
-            });
-            <?php 
-            if($this->session->flashdata('msg_failed')){
-            ?>
-            Toast.fire({
-                type: 'error',
-                title: '<?= $this->session->flashdata('msg_failed')?>'
-            });
-            <?php 
-            }elseif($this->session->flashdata('msg_success')){
-            ?>
-            Toast.fire({
-                type: 'success',
-                title: '<?= $this->session->flashdata('msg_success')?>'
-            });
-            <?php
-            }
-            ?>
-        });
         </script>
     </body>
 </html>

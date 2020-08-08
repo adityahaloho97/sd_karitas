@@ -9,7 +9,7 @@
                   </div><!-- /.col -->
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
-                          <li class="breadcrumb-item"><a href="<?= base_url('admin') ?>">Dashboard</a></li>
+                          <li class="breadcrumb-item"><a href="<?= base_url('guru/dashboard') ?>">Dashboard</a></li>
                           <li class="breadcrumb-item active"><?= ucwords($title) ?></li>
                       </ol>
                   </div><!-- /.col -->

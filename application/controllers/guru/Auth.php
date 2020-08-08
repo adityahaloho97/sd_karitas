@@ -50,13 +50,12 @@ class Auth extends CI_controller
         }
     }
 
-    public function logout()
+    /*public function logout()
     {
         $this->session->unset_userdata('is_login');
         $this->session->unset_userdata('nama');
         $this->session->unset_userdata('foto');
         $this->session->unset_userdata('nama_role');
-        $this->session->unset_userdata('nisn');
         $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil logut');
         redirect('/');
     }
@@ -69,5 +68,5 @@ class Auth extends CI_controller
             $this->session->unset_userdata('nama');
             $this->session->set_flashdata('msg_success', 'Selamat, Anda berhasil logut');
             redirect('?p=login');
-    }
+    }*/
 }

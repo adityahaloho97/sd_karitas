@@ -171,6 +171,19 @@ class Tenaga_pendidik extends CI_controller
         }
     }
 
+    public function delete_wali($id){
+        $delete = $this->db->delete('guru_kelas', ['id_gtk' => $id]);
+
+        if ($delete) {
+            $this->session->set_flashdata('msg_success', 'Selamat, data berhasil dihapus');
+            http_response_code(200);
+        }else{
+            $this->session->set_flashdata('msg_failed', 'Selamat, data gagal dihapus');
+            http_response_code(404);
+        }
+
+    }
+
     public function delete($id){
     	$delete = $this->db->delete('tenaga_kependidikan', ['id_tenaga_kependidikan'=> $id]);
 
@@ -190,7 +203,7 @@ class Tenaga_pendidik extends CI_controller
             'title' => 'Konfigurasi Wali Kelas',
             'gurus' => $this->db->get_where('tenaga_kependidikan', ['hak_akses' => 'wali kelas'])->result_array(),
             'kelas_list' => $this->db->get('kelas')->result_array(),
-            'list' => $this->db->query("SELECT guru_kelas.id_guru_kelas, guru.id_tenaga_kependidikan, guru.nama, guru.nip, GROUP_CONCAT(kelas.nama_kelas) AS kelas FROM `guru_kelas` JOIN tenaga_kependidikan AS guru ON guru.id_tenaga_kependidikan=guru_kelas.id_gtk JOIN kelas ON kelas.id_kelas=guru_kelas.id_kelas GROUP BY guru.id_tenaga_kependidikan")->result_array()
+            'list' => $this->db->query("SELECT guru_kelas.id_guru_kelas, guru_kelas.id_gtk, guru.id_tenaga_kependidikan, guru.nama, guru.nip, GROUP_CONCAT(kelas.nama_kelas) AS kelas FROM `guru_kelas` JOIN tenaga_kependidikan AS guru ON guru.id_tenaga_kependidikan=guru_kelas.id_gtk JOIN kelas ON kelas.id_kelas=guru_kelas.id_kelas GROUP BY guru.id_tenaga_kependidikan")->result_array()
         ];
 
         $this->form_validation->set_rules('guru', 'Guru', 'required|trim', ['required' => '{field} tidak boleh kosong']);
@@ -327,7 +340,7 @@ class Tenaga_pendidik extends CI_controller
 
     public function laporan(){
 
-        $data['gtk'] = $this->db->get('tenaga_kependidikan')->result_array();
+        $data['gtk'] = $this->db->query("SELECT * FROM `tenaga_kependidikan` WHERE hak_akses = 'guru' OR hak_akses = 'wali kelas'")->result_array();
 
         $this->load->library('pdf');
 

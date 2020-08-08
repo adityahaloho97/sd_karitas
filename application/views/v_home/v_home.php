@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title><?=$title?></title>
+        <title><?=$title?> </title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -42,7 +42,7 @@
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image--><img class="masthead-avatar mb-5" src="<?=base_url('assets/images/logo_sd.png')?>" alt="" /><!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">SD KARITAS NANDAN 1</h1>
+                <h1 class="masthead-heading text-uppercase mb-0">KARITAS NANDAN </h1>
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -50,7 +50,7 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">Jalan Nandan, Sariharjo, Ngaglik, Sleman, Yogyakarta.</p>
+                <p class="masthead-subheading font-weight-light mb-0"> Nandan, Sariharjo, Ngaglik, Sleman, Yogyakarta.</p>
             </div>
         </header>
 
@@ -67,8 +67,8 @@
                 </div>
                 <!-- About Section Content-->
                 <div class="row">
-                    <div class="col-lg-6 ml-auto"><p class="lead">Pendidikan di SD Karitas ini berlandaskan pada semboyan, Deus Caritas Est, yang artinya yaitu “Allah adalah cinta kasih”. Di SD Karitas Nandan ini, baik para siswa, guru, maupun sistem pendidikannya sendiri benar2 dilandaskan pada semboyan “Allah adalah cinta kasih”. Dengan St. Vincentius a Paulo sebagai Santo Pelindung sekolah ini, sang pendiri Kongregasi Bruder Karitas, yaitu Rm. Petrus Josef Triest (1760-1836), mewarisi semboyan nya pada Kongregasi dan juga pada buah karya mereka, seperti SD Karitas ini.</p></div>
-                    <div class="col-lg-6 mr-auto"><p class="lead">SD Karitas adalah sebuah Sekolah Dasar yang diperuntukkan untuk umum dengan nafas pendidikan Katolik. SD Karitas berada di bawah pengelolaan Yayasan Karya Bakti yang dikelola oleh Bruder-bruder Karitas. SD Karitas menganut pendidikan heterogen. Selain merupakan sekolah heterogen pada umumnya, murid-murid SD Karitas tidak hanya berasal dari Pulau Jawa, tetapi juga terdapat pula siswa-siswa yang berasal dari Papua, Nias, Sumatra dan Kalimantan.</p></div>
+                    <div class="col-lg-6 ml-auto"><p class="lead">Pendidikan di SD Karitas ini berlandaskan pada semboyan, Deus Caritas Est, yang artinya yaitu “Allah adalah cinta kasih”. Di SD Karitas Nandan ini, baik para siswa, guru, maupun sistem pendidikannya sendiri benar2 dilandaskan pada semboyan “Allah adalah cinta kasih”. Dengan St. Vincentius a Paulo sebagai Santo Pelindung sekolah ini, sang pendiri Kongregasi Bruder Karitas, yaitu Rm. Petrus Josef Triest (1760-1836), mewarisi semboyan nya pada Kongregasi dan juga pada buah karya mereka, seperti SD Karitas ini. Tlpn. 0274 – 624923</p></div>
+                    <div class="col-lg-6 mr-auto"><p class="lead">SD Karitas adalah sebuah Sekolah Dasar yang diperuntukkan untuk umum dengan nafas pendidikan Katolik. SD Karitas berada di bawah pengelolaan Yayasan Karya Bakti yang dikelola oleh Bruder-bruder Karitas. SD Karitas menganut pendidikan heterogen. Selain merupakan sekolah heterogen pada umumnya, murid-murid SD Karitas tidak hanya berasal dari Pulau Jawa, tetapi juga terdapat pula siswa-siswa yang berasal dari Papua, Nias, Sumatra dan Kalimantan. Email: kontak@sekolahkaritasyogya.sch.id</p></div>
                 </div>
 
             </div>
@@ -115,7 +115,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Nama Lengkap <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="ampas" name="nama" type="text" placeholder="Masukkan Nama Lengkap" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama')?>" onkeyup="angka(this)" />
+                                            <input class="form-control" id="ampas" name="nama" type="text" placeholder="Masukkan Nama Lengkap" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama')?>"onkeyup="huruf(this)"/>
                                             <small class="text-danger"> <span id="ampas_error"></span><?= form_error('nama') ?></small>
                                         </div>
                                     </div>
@@ -268,16 +268,16 @@
                     </div>
                     <!-- Footer Social Icons-->
                     <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4">Sosial Media</h4>
+                        <!-- <h4 class="text-uppercase mb-4">Sosial Media</h4>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-instagram"></i></a> -->
                     </div>
                     <!-- Footer About Text-->
                     <div class="col-lg-4">
                         <h4 class="text-uppercase mb-4">Semboyan Kami</h4>
-                        <p class="lead mb-0">Deus Caritas Est <br> (Allah adalah cinta kasih)</a>.</p>
+                        <p class="lead mb-0">Deus Caritas Est <br> (Allah adalah cinta kasih)</a></p>
                     </div>
                 </div>
             </div>
@@ -316,11 +316,13 @@
 
         <!-- Core theme JS-->
         <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
+        <!-- <script src="<?php echo base_url('assets/js/js-form-validator.min.js')?>"></script>
+        <script src="<?php echo base_url('assets/js/js-form-validator.js')?>"></script> -->
 
         <script>
-            function angka(e){
+            function huruf(e){
                 if ($('#ampas').val() == 1) {
-                    return $('ampas_error').text('hanya angka')
+                    return $('ampas_error').text('hanya huruf')
                 }
             }
         </script>
