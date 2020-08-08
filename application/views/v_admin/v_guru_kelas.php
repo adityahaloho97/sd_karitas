@@ -224,7 +224,7 @@
          if (isConfirm.value) {
            $.ajax({
              type: "post",
-             url: "<?= base_url() ?>admin/Tenaga_pendidik/delete/" + dataId,
+             url: "<?= base_url() ?>admin/Tenaga_pendidik/delete_wali/" + dataId,
              data: {
                'id_kelas': dataId
              },
