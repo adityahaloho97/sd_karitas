@@ -113,7 +113,7 @@ class M_gtk extends CI_Model
         return $data;
     }
 
-    public function getSiswaRaport($nip){
-        return $this->db->query("SELECT * FROM siswa JOIN guru_kelas ON guru_kelas.id_kelas=siswa.id_kelas JOIN tenaga_kependidikan AS gtk ON gtk.id_tenaga_kependidikan=guru_kelas.id_gtk JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE gtk.nip = $nip GROUP BY siswa.id_siswa")->result_array();
+    public function getSiswaRaport($nip, $tahun, $id_kelas){
+        return $this->db->query("SELECT * FROM siswa JOIN kelas ON kelas.id_kelas=siswa.id_kelas JOIN pendaftaran ON pendaftaran.id_siswa=siswa.id_siswa JOIN riwayat_kelas AS riwayat ON riwayat.id_siswa=siswa.id_siswa  WHERE pendaftaran.status = 'terima' AND riwayat.id_tahun_ajaran = $tahun AND riwayat.id_kelas = $id_kelas GROUP BY siswa.id_siswa")->result_array();
     }
 }

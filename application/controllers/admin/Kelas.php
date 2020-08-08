@@ -32,8 +32,16 @@ class Kelas extends CI_controller
     		$this->session->set_flashdata('msg_failed', 'Maaf, data gagal ditambahkan');
             redirect('admin/kelas');
     	}else{
+            $kelas = $this->input->post('kelas', true);
+            $cek = $this->db->query("SELECT * FROM `kelas` WHERE `nama_kelas` = '$kelas'")->num_rows();
+            if($cek){
+                $this->session->set_flashdata('msg_failed', 'Maaf, Data Kelas sudah ada');
+                redirect('admin/kelas');
+                return false;
+            }
+
     		$data = [
-    			'nama_kelas' => $this->input->post('kelas', true)
+    			'nama_kelas' => $kelas
     		];
 
     		if (insertData('kelas', $data)) {
@@ -62,11 +70,20 @@ class Kelas extends CI_controller
                 $this->session->set_flashdata('msg_failed', 'Maaf, data kelas gagal diperbarui');
                 redirect('admin/kelas');
             }else{
+                $kelas = $this->input->post('kelas', true);
+                $id_kelas = $this->input->post('id');
+                $cek = $this->db->query("SELECT * FROM `kelas` WHERE `nama_kelas` = '$kelas' AND id_kelas != $id_kelas")->num_rows();
+                if($cek){
+                    $this->session->set_flashdata('msg_failed', 'Maaf, Data Kelas sudah ada');
+                    redirect('admin/kelas');
+                    return false;
+                }
+
                 $data = [
                     'nama_kelas' => $this->input->post('kelas', true)
                 ];
 
-                if ($this->db->update('kelas', $data, ['id_kelas' => $this->input->post('id')])) {
+                if ($this->db->update('kelas', $data, ['id_kelas' => $id_kelas])) {
                     $this->session->set_flashdata('msg_success', 'Selamat, data berhasil diperbarui');
                     redirect('admin/kelas');
                 }else{

@@ -42,7 +42,7 @@
                                  <th class="text-nowrap">Guru</th>
                                  <th class="text-nowrap">Kelas</th>
                                  <th class="text-nowrap">Mapel</th>
-                                 <th style="width: 15%">Aksi</th>
+                                 <th style="width: 5%">Aksi</th>
                                </tr>
                              </thead>
                              <tbody>
@@ -55,7 +55,9 @@
                                 <td><?=ucwords($m['nama'])?></td>
                                 <td><?=ucwords($m['nama_kelas'])?></td>
                                 <td><?php echo ucwords($m['nama_mapel'])?></td>
-                                <td><a href="javascript:void(0)" data-toggle="modal" id="<?=$m['id']?>" data-target="#modal-lg" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?=$m['id']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
+                                <td>
+                                <!-- <td><a href="javascript:void(0)" data-toggle="modal" id="<?=$m['id']?>" data-target="#modal-lg" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i> -->
+                              </a><a href="javascript:void(0)" id="<?=$m['id']?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
                               </tr>
                              <?php endforeach; ?>
                              </tbody>

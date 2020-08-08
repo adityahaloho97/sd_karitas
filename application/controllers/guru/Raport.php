@@ -24,28 +24,33 @@ class Raport extends CI_controller
         $nip = $this->session->userdata('username');
         $data['title'] = 'Naik Kelas';
         $data['kelas_pilih'] = $this->db->query("SELECT * FROM `guru_kelas` JOIN kelas ON kelas.id_kelas=guru_kelas.id_kelas JOIN tenaga_kependidikan AS gtk ON gtk.id_tenaga_kependidikan=guru_kelas.id_gtk WHERE gtk.nip = $nip")->result_array();
+       
+       $id_kelas = $data['kelas_pilih'][0]['id_kelas'];
         // $data['kelas'] = $this->db->query("SELECT kelas.id_kelas, kelas.nama_kelas FROM `guru_kelas` JOIN tenaga_kependidikan AS gtk ON gtk.id_tenaga_kependidikan=guru_kelas.id_gtk JOIN kelas ON kelas.id_kelas=guru_kelas.id_kelas WHERE gtk.nip = $nip ")->result_array();
       //  $data['kelas'] =  $this->db->query("SELECT kelas.id_kelas, kelas.nama_kelas FROM `guru_mengajar` JOIN tenaga_kependidikan AS gtk ON gtk.id_tenaga_kependidikan=guru_mengajar.id_guru JOIN kelas ON kelas.id_kelas=guru_mengajar.id_kelas WHERE gtk.nip = $nip ")->result_array();
         $data['kelas'] = $this->db->get('kelas')->result_array();
         $data['tahun_ajaran'] = $this->db->get_where('tahun_ajaran', ['id_tahun_ajaran' => getIdTahun(getTahun())])->row_array();
 
-            $data['siswa'] = $this->m_gtk->getSiswaRaport($nip);
+        $data['siswa'] = $this->m_gtk->getSiswaRaport($nip, getIdTahun(getTahun()), $id_kelas);
 
 
         getViews($data, 'v_guru/v_list_siswa_raport');
     }
 
     public function download($nisn){
+        $nip = $this->session->userdata('username');
+
+        $kelas = $this->db->query("SELECT kelas.id_kelas, kelas.nama_kelas FROM `guru_kelas` JOIN kelas ON kelas.id_kelas=guru_kelas.id_kelas JOIN tenaga_kependidikan AS gtk ON gtk.id_tenaga_kependidikan=guru_kelas.id_gtk WHERE gtk.nip = $nip")->row_array();
 
         $data = [
+            'kelas_ampas' => $kelas,
             'siswa' => $this->db->query("SELECT * FROM `siswa` JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE siswa.nisn = $nisn")->row_array(),
             'id_tahun' => getIdTahun(getTahun()),
-            'mapel' => $this->db->query("SELECT * FROM `mapel_kelas` JOIN siswa ON siswa.id_kelas=mapel_kelas.id_kelas JOIN mata_pelajaran AS mapel ON mapel.kode_mapel=mapel_kelas.kode_mapel WHERE siswa.nisn = $nisn")->result_array()
+            'mapel' => $this->db->query("SELECT * FROM `mapel_kelas` JOIN mata_pelajaran AS mapel ON mapel.kode_mapel=mapel_kelas.kode_mapel WHERE mapel_kelas.id_kelas = ".$kelas['id_kelas'])->result_array()
         ];
 
         $nama = $data['siswa']['nama_siswa'];
-        $nisn = $data['siswa']['nisn'];
-        $kelas = $data['siswa']['nama_kelas'];
+        $nisn = $data['siswa']['nisn']; 
 
         $this->load->library('pdf');
 

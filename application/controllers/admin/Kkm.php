@@ -34,10 +34,28 @@ class Kkm extends CI_controller
             $this->form_validation->set_rules('kelas', 'Kelas', 'required', ['required' => '{field} tidak boleh kososng!']);
             $this->form_validation->set_rules('kkm', 'KKM', 'required', ['required' => '{field} tidak boleh kososng!']);
 
+            if($this->cekInputan($this->input->post('kkm')) == false){
+                $this->session->set_flashdata('msg_failed', 'Maaf, KKM tidak boleh kurang dari 0 atau lebih dari 100');
+                redirect('admin/kkm');
+                return false;
+            }
+
             if($this->form_validation->run() == FALSE){
                 $this->session->set_flashdata('msg_failed', 'Maaf, data gagal ditambahkan');
                 redirect('admin/kkm');
             }else{
+
+                $id_kelas = $this->input->post('kelas');
+                $kode_mapel = $this->input->post('mapel');
+                //cek data 
+                $cek = $this->db->query("SELECT * FROM `kkm_mapel` WHERE id_kelas = $id_kelas AND `kode_mapel` = '$kode_mapel'")->num_rows();
+
+                if($cek > 0){
+                    $this->session->set_flashdata('msg_failed', 'Maaf, Data KKM sudah ada');
+                    redirect('admin/kkm');
+                    return false;
+                }
+
                 $data = [
                     'kkm' => $this->input->post('kkm'),
                     'kode_mapel' => $this->input->post('mapel'),
@@ -56,6 +74,49 @@ class Kkm extends CI_controller
         }
     }
 
+    public function update(){
+        if(isset($_POST['id_get_update'])){
+            $id_kkm = $_POST['id_get_update'];
+
+            $data = $this->db->get_where('kkm_mapel', ['id_kkm' => $id_kkm])->row_array();
+
+            echo json_encode($data);
+        }else{
+            $this->form_validation->set_rules('mapel', 'Nama mapel', 'required', ['required' => '{field} tidak boleh kososng!']);
+            $this->form_validation->set_rules('kelas', 'Kelas', 'required', ['required' => '{field} tidak boleh kososng!']);
+            $this->form_validation->set_rules('kkm', 'KKM', 'required', ['required' => '{field} tidak boleh kososng!']);
+
+            if($this->cekInputan($this->input->post('kkm')) == false){
+                $this->session->set_flashdata('msg_failed', 'Maaf, KKM tidak boleh kurang dari 0 atau lebih dari 100');
+                redirect('admin/kkm');
+                return false;
+            }
+
+            if($this->form_validation->run() == FALSE){
+                $this->session->set_flashdata('msg_failed', 'Maaf Data tidak boleh kosong');
+                redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $data = [
+                    'kkm' => $this->input->post('kkm'),
+                    'kode_mapel' => $this->input->post('mapel'),
+                    'id_kelas' => $this->input->post('kelas'),
+                    'id_tahun_pelajaran' => getIdTahun(getTahun())
+                ];
+
+                $update = $this->db->update('kkm_mapel', $data, ['id_kkm' => $_POST['id']]);
+
+                if($update){
+                    $this->session->set_flashdata('msg_success', 'Selamat, data berhasil diperbarui');
+                    redirect('admin/kkm');
+                }else{
+                    $this->session->set_flashdata('msg_failed', 'Maaf, data gagal diperbarui');
+                    redirect('admin/kkm');
+                }
+            }
+
+        }
+    }
+
     public function delete($id){
         $delete = $this->db->delete('kkm_mapel', ['id_kkm'=> $id]);
 
@@ -68,6 +129,12 @@ class Kkm extends CI_controller
     	}
     }
 
+    public function get_kelas(){
+        $data = $this->db->get('kelas')->result_array();
+
+        echo json_encode($data);
+    }
+
     public function get_mapel(){
         if(isset($_POST['id_kelas'])){
             $id_kelas = $_POST['id_kelas'];
@@ -75,6 +142,16 @@ class Kkm extends CI_controller
             $data = $this->db->query("SELECT * FROM `mapel_kelas` JOIN mata_pelajaran AS mapel ON mapel.kode_mapel=mapel_kelas.kode_mapel WHERE id_kelas = $id_kelas")->result_array();
 
             echo json_encode($data);
+        }
+    }
+
+    public function cekInputan($nilai){
+        if($nilai < 0){
+            return false;
+        }elseif($nilai > 100){
+            return false;
+        }else{
+            return true;
         }
     }
 }

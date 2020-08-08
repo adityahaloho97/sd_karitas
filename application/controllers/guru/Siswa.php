@@ -120,7 +120,14 @@ class Siswa extends CI_controller
 
                 $id_tahun = getIdTahun(getTahun());
 
-                $query = $this->db->query("SELECT * FROM `pendaftaran` JOIN siswa ON siswa.nisn=pendaftaran.nisn JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE $where AND id_tahun_ajaran = $id_tahun AND pendaftaran.status = 'terima' ORDER BY siswa.id_kelas");
+                $query = $this->db->query("SELECT * FROM `pendaftaran` JOIN siswa ON siswa.id_siswa=pendaftaran.id_siswa JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE $where AND id_tahun_ajaran = $id_tahun AND pendaftaran.status = 'terima' ORDER BY siswa.id_kelas");
+                
+                if($query->num_rows() == 0){
+                    $this->session->set_flashdata('msg_failed', 'Maaf Tidak Ada Siswa');
+                    redirect('guru/siswa');
+                    return false;
+                }
+                
                 $data['pendaftar'] = $query->result_array();
                 $data['tahun_ajaran'] = $this->db->get_where('tahun_ajaran', ['id_tahun_ajaran' => $id_tahun])->row_array();
 
