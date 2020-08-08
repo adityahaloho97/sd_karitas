@@ -125,7 +125,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="kelas">Kode Mapel</label>
-                            <input type="text" class="form-control" name="kode" id="kode_update" placeholder="Masukkan Nama Kelas" value="">
+                            <input type="text" class="form-control" name="kode" id="kode_update" placeholder="Masukkan Nama Kelas" value="" readonly>
                             <small class="text-danger mt-2"><?= form_error('kelas') ?></small>
                           </div>
                         </div>

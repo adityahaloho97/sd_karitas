@@ -86,7 +86,7 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         <tr>
           <td>Kelas</td>
           <td style="width: 5%;">:</td>
-          <td><?=$siswa['nama_kelas']?></td>
+          <td><?=$kelas_ampas['nama_kelas']?></td>
         </tr>
       </table>
       <br>
@@ -108,14 +108,14 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
           foreach($mapel AS $m):
             //get nilai
             $kode = $m['kode_mapel'];
-            $nilai = $this->db->query("SELECT `nilai_total` FROM `nilai` WHERE `id_siswa` = ".$m['id_siswa']." AND `id_kelas` = ".$m['id_kelas']." AND `kode_mapel` = '$kode'")->row_array();
+            $nilai = $this->db->query("SELECT `nilai_total` FROM `nilai` WHERE `id_siswa` = ".$siswa['id_siswa']." AND `id_kelas` = ".$kelas_ampas['id_kelas']." AND `kode_mapel` = '$kode'")->row_array();
             if(!empty($nilai)){
               $total = $nilai['nilai_total'];
             }else{
               $total = "Kososng";
             }
 
-            $kkm = $this->db->query("SELECT `kkm` FROM `kkm_mapel` WHERE `id_kelas` = ".$m['id_kelas']." AND `kode_mapel` = '$kode' AND `id_tahun_pelajaran` = $id_tahun")->row_array();
+            $kkm = $this->db->query("SELECT `kkm` FROM `kkm_mapel` WHERE `id_kelas` = ".$kelas_ampas['id_kelas']." AND `kode_mapel` = '$kode' AND `id_tahun_pelajaran` = $id_tahun")->row_array();
             if(!empty($kkm)){
               $kkm_nilai = $kkm['kkm'];
             }else{
@@ -123,7 +123,7 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
             }
 
             //hitung rata-rata
-            $nilaiTotal = $this->db->query("SELECT SUM(`nilai_total`) AS total FROM `nilai` WHERE `id_siswa` = ".$m['id_siswa']." AND id_tahun_ajaran = $id_tahun")->row_array();
+            $nilaiTotal = $this->db->query("SELECT SUM(`nilai_total`) AS total FROM `nilai` WHERE `id_siswa` = ".$siswa['id_siswa']." AND id_tahun_ajaran = $id_tahun")->row_array();
             $rata2 = $nilaiTotal['total'] / $jumlah_mapel;
 
             

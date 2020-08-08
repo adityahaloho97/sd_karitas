@@ -49,7 +49,7 @@
                                  $no = 1;
                                     foreach($siswa AS $s) :
 
-                                    switch($s['kelamin']){
+                                    switch($s['jenis_kelamin']){
                                         case 'L':
                                             $gender = 'Laki - Laki';
                                         break;

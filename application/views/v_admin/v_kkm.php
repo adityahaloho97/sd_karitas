@@ -55,7 +55,7 @@
                                 <td><?php echo $m['kkm'] ?></td>
                                 <td><?= ucwords($m['nama_mapel'])?></td>
                                 <td><?= ucwords($m['nama_kelas'])?></td>
-                                <td><a href="javascript:void(0)" data-toggle="modal" id="<?php echo $m['kode_mapel'] ?>" data-target="#modal-lg" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?php echo $m['id_kkm'] ?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
+                                <td><a href="javascript:void(0)" data-toggle="modal" id="<?php echo $m['id_kkm'] ?>" data-target="#modal-lg" class="btn btn-sm btn-primary mr-3 update"><i class="fa fa-edit"></i></a><a href="javascript:void(0)" id="<?php echo $m['id_kkm'] ?>" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></a></td>
                               </tr>
                              <?php endforeach; ?>
                              </tbody>
@@ -127,31 +127,43 @@
              <!-- /.modal -->
 
               <div class="modal fade" id="modal-lg">
-               <div class="modal-dialog">
+               <div class="modal-dialog modal-lg">
                  <div class="modal-content">
                    <div class="modal-header">
-                     <h4 class="modal-title">Edit <span id="nama2"></span></h4>
+                     <h4 class="modal-title">Edit KKM</span></h4>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
                      </button>
                    </div>
                    <div class="modal-body">
                          <!-- form start -->
-                      <form action="<?= base_url('admin/mapel/update') ?>" method="post" role="form">
-                        <input type="hidden" name="id" id="id_kelas" value="">
+                      <form action="<?= base_url('admin/kkm/update') ?>" method="post" role="form">
+                      <input type="hidden" name="id" id="id_kkm" value="">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group">
-                            <label for="kelas">Kode Mapel</label>
-                            <input type="text" class="form-control" name="kode" id="kode_update" placeholder="Masukkan Nama Kelas" value="">
+                            <label for="kelas">Pilih Kelas</label>
+                            <select name="kelas" class="form-control select2bs4" id="kelas_update" data-placeholder="Pilih Kelas">
+                                
+                            </select>
                             <small class="text-danger mt-2"><?= form_error('kelas') ?></small>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group">
-                            <label for="kelas">Nama Mapel</label>
-                            <input type="text" class="form-control" name="mapel" id="mapel_update" placeholder="Masukkan Nama Kelas" value="">
-                            <small class="text-danger mt-2"><?= form_error('kelas') ?></small>
+                            <label for="kelas">Pilih Mapel</label>
+                            <select name="mapel" class="form-control select2bs4 mapel" id="mapel_update" data-placeholder="Pilih Mata Pelajaran">
+                                <option value=""></option>
+                                
+                            </select>
+                            <small class="text-danger mt-2"><?= form_error('mapel') ?></small>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="kelas">KKM</label>
+                            <input type="text" class="form-control" name="kkm" id="kkm_update" placeholder="Masukkan KKM" value="<?php echo set_value('kkm'); ?>">
+                            <small class="text-danger mt-2"><?= form_error('kkm') ?></small>
                           </div>
                         </div>
                       </div>
@@ -197,20 +209,87 @@
      });
    });
 
+   $('#kelas_update').on('change', function(){
+       var id_kelas = $('#kelas_update').val();
+       $.ajax({
+            type : "post",
+            url : "<?= base_url('admin/kkm/get_mapel')?>",
+            data : {
+                'id_kelas' : id_kelas
+            },
+            dataType : "json",
+            success : function(data){
+                var html = '<option></option>';
+                var i;
+
+                for(i=0; i<data.length; i++){
+                    html += '<option value="'+data[i].kode_mapel+'">'+data[i].nama_mapel+'</option>';
+                }
+
+                $('.mapel').html(html)
+            }
+       })
+   });
+
 
    $('.update').on('click', function() {
      var dataId = this.id;
      $.ajax({
        type: "post",
-       url: "<?= base_url('admin/mapel/update') ?>",
+       url: "<?= base_url('admin/kkm/update') ?>",
        data: {
          'id_get_update': dataId
        },
        dataType: "json",
        success: function(data) {
-          $('#nama2').text(data.nama_mapel);     
-          $('#mapel_update').val(data.nama_mapel);
-          $('#kode_update').val(data.kode_mapel);  
+          $('#id_kkm').val(data.id_kkm);     
+          $('#kelas_update').val(data.id_kelas).change();
+          $('#kkm_update').val(data.kkm);
+          $.ajax({
+            type : "post",
+            url : "<?= base_url('admin/kkm/get_kelas')?>",
+            dataType : "json",
+            success : function(req){
+                var html = '<option></option>';
+                var i;
+
+                for(i=0; i<req.length; i++){
+                  if(req[i].id_kelas == data.id_kelas){
+                    var select = 'selected';
+                  }else{
+                    var select = '';
+                  }
+                    html += '<option value="'+req[i].id_kelas+'" '+select+'>'+req[i].nama_kelas+'</option>';
+                }
+
+                $('#kelas_update').html(html)
+            }
+          });
+
+          $.ajax({
+            type : "post",
+            url : "<?= base_url('admin/kkm/get_mapel')?>",
+            data : {
+                'id_kelas' : data.id_kelas
+            },
+            dataType : "json",
+            success : function(res){
+                var html = '<option></option>';
+                var i;
+
+                for(i=0; i<res.length; i++){
+                  if(res[i].kode_mapel == data.kode_mapel){
+                    var select = 'selected';
+                  }else{
+                    var select = '';
+                  }
+
+                    html += '<option value="'+res[i].kode_mapel+'" '+select+'>'+res[i].nama_mapel+'</option>';
+                }
+
+                $('#mapel_update').html(html)
+            }
+          });          
        },
      });
    });
@@ -235,7 +314,9 @@
                 $('#mapel').html(html)
             }
        })
-   })
+   });
+
+  
 
    $('.delete').on('click', function(e) {
      e.preventDefault();

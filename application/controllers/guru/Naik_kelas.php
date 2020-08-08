@@ -37,9 +37,10 @@ class Naik_kelas extends CI_controller
     }
 
     public function proses(){
-        $this->form_validation->set_rules('naik', 'Siswa', 'required', ['required' => '{field} belum dipilih']);
+        
+        $naik  = $_POST['naik'];
 
-        if($this->form_validation->run() == FALSE){
+        if(count($naik) == 0){
             $this->session->set_flashdata('msg_failed', 'Maaf Siswa Belum dipilih');
             redirect($_SERVER['HTTP_REFERER']);
         }else{
@@ -59,7 +60,7 @@ class Naik_kelas extends CI_controller
 
                     //insert ke riwayat kelas
                     $data_riwayat = [
-                        'id_kelas' => $nisn[$i],
+                        'id_siswa' => $nisn[$i],
                         'id_kelas' => $kelas_lama,
                         'id_tahun_ajaran' => getIdTahun(getTahun())
                     ];
