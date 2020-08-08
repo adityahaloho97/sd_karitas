@@ -10,7 +10,7 @@
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Dashboard</a></li>
-                          <li class="breadcrumb-item active">Daftar GTK</li>
+                        <!--   <li class="breadcrumb-item active">Daftar GTK</li> -->
                       </ol>
                   </div><!-- /.col -->
               </div><!-- /.row -->

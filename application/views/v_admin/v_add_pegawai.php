@@ -119,7 +119,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="agama">Agama <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="agama" id="agama" placeholder="Masukkan Agama" value="<?php echo set_value('agama')?>">
+                                <select name="agama" id="agama" class="form-control select2bs4" data-placeholder="Pilih Agama" require>
+                                    <option></option>
+                                    <option value="islam">Islam</option>
+                                    <option value="kristen">Kristen</option>
+                                    <option value="hindu">Hindu</option>
+                                    <option value="budha">Budha</option>
+                                    <option value="konghucu">Konghucu</option>
+                                </select>
                                 <small class="text-danger mt-2"><?= form_error('agama') ?></small>
                             </div>
                         </div>
