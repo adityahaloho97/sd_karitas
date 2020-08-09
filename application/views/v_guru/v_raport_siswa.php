@@ -3,6 +3,16 @@ $path = base_url().'assets/images/logo_sd.png';
 $type = pathinfo($path, PATHINFO_EXTENSION);
 $data = file_get_contents($path);
 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+//cek siswa naik kelas atau tidak
+$id_siswa = $siswa['id_siswa'];
+$id_kelas = $siswa['id_kelas'];
+$cek_naik = $this->db->query("SELECT * FROM `riwayat_kelas` WHERE `id_siswa` = $id_siswa AND `id_kelas` != $id_kelas AND `id_tahun_ajaran` =".$tahun['id_tahun_ajaran'])->num_rows();
+if($cek_naik > 0){
+  $naik = "Naik Kelas";
+}else{
+  $naik = "Tinggal Kelas";
+}
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +98,11 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
           <td style="width: 5%;">:</td>
           <td><?=$kelas_ampas['nama_kelas']?></td>
         </tr>
+        <tr>
+          <td>Tahun Ajaran</td>
+          <td style="width: 5%;">:</td>
+          <td><?=$tahun['tahun_mulai']?> - <?=$tahun['tahun_akhir']?></td>
+        </tr>
       </table>
       <br>
       <br>
@@ -98,7 +113,7 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
             <th>Mata Pelajaran</th>
             <th>KKM</th>
             <th>Nilai Siswa</th>
-            <th>Rata - Rata</th>
+            <th>Nilai Sikap</th>
           </tr>
         </thead>
         <tbody>
@@ -108,7 +123,7 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
           foreach($mapel AS $m):
             //get nilai
             $kode = $m['kode_mapel'];
-            $nilai = $this->db->query("SELECT `nilai_total` FROM `nilai` WHERE `id_siswa` = ".$siswa['id_siswa']." AND `id_kelas` = ".$kelas_ampas['id_kelas']." AND `kode_mapel` = '$kode'")->row_array();
+            $nilai = $this->db->query("SELECT `nilai_total`, nilai_sikap FROM `nilai` WHERE `id_siswa` = ".$siswa['id_siswa']." AND `id_kelas` = ".$kelas_ampas['id_kelas']." AND `kode_mapel` = '$kode'")->row_array();
             if(!empty($nilai)){
               $total = $nilai['nilai_total'];
             }else{
@@ -133,7 +148,7 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
             <td><?=ucwords($m['nama_mapel'])?></td>
             <td><?=$kkm_nilai?></td>
             <td><?=$total?></td>
-            <td>70</td>
+            <td><?=$nilai['nilai_sikap']?></td>
           </tr>
           
           <?php
@@ -148,7 +163,31 @@ $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
       </table>
     </div>
     <div class="ket" style="margin-top: 20px;">
-      <p>Sesuai dengan hasil yang dicapai, maka siswa dinyatakan <b>Naik Kelas</b>.</p>
+      <p>Sesuai dengan hasil yang dicapai, maka siswa dinyatakan <b><?=$naik?></b>.</p>
+      <br>
+      <p>Table Keterangan Nilai</p>
+      <table>
+        <tr>
+          <td>A</td>
+          <td>:</td>
+          <td>80 - 100</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>:</td>
+          <td>60 - 80</td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td>:</td>
+          <td>40 - 60</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>:</td>
+          <td>20 - 40</td>
+        </tr>
+      </table>
     </div>
 
     <div class="hormat">

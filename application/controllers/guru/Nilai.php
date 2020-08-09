@@ -61,6 +61,13 @@ class Nilai extends CI_controller
                 $tugas = $_POST['tugas'][$i];
                 $uts   = $_POST['uts'][$i];
                 $uas   = $_POST['uas'][$i];
+                $sikap = $_POST['sikap'][$i];
+
+                if($sikap == ''){
+                    $this->session->set_flashdata('msg_failed', 'Maaf, Nilai sikap tidak boleh kosong');
+                    http_response_code(500);
+                    return false;
+                }
 
                 if($this->cekInputan($tugas) == false){
                     $this->session->set_flashdata('msg_failed', 'Maaf, Nilai tidak boleh kurang dari 0 atau lebih dari 100');
@@ -104,7 +111,8 @@ class Nilai extends CI_controller
                     'nilai_harian' => $tugas,
                     'nilai_uts' => $uts,
                     'nilai_uas' => $uas,
-                    'nilai_total' => $TotalNilai
+                    'nilai_total' => $TotalNilai,
+                    'nilai_sikap' => $sikap
                 ];
 
                 $insertNilai = $this->db->insert('nilai', $data);
@@ -191,6 +199,13 @@ class Nilai extends CI_controller
                     $tugas = $_POST['tugas'][$i];
                     $uts   = $_POST['uts'][$i];
                     $uas   = $_POST['uas'][$i];
+                    $sikap = $_POST['sikap'][$i];
+
+                    if($sikap == ''){
+                        $this->session->set_flashdata('msg_failed', 'Maaf, Nilai sikap tidak boleh kosong');
+                        http_response_code(500);
+                        return false;
+                    }
 
                     if($this->cekInputan($tugas) == false){
                         $this->session->set_flashdata('msg_failed', 'Maaf, Nilai tidak boleh kurang dari 0 atau lebih dari 100');
@@ -234,7 +249,8 @@ class Nilai extends CI_controller
                         'nilai_harian' => $tugas,
                         'nilai_uts' => $uts,
                         'nilai_uas' => $uas,
-                        'nilai_total' => $TotalNilai
+                        'nilai_total' => $TotalNilai,
+                        'nilai_sikap' => $sikap
                     ];
 
                     $insertNilai = $this->db->insert('nilai', $data);

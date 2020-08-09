@@ -81,6 +81,7 @@
                     <th class="text-nowrap" style="width: 15%">Nilai UTS</th>
                     <th class="text-nowrap" style="width: 15%">Nilai UAS</th>
                     <th class="text-nowrap" style="width: 15%">Nilai Total</th>
+                    <th class="text-nowrap" style="width: 15%">Nilai Sikap</th>
                   </tr>
                 </thead>
                 
@@ -98,6 +99,7 @@
                         <td><?=$nilai['nilai_uts']?></td>
                         <td><?=$nilai['nilai_uas']?></td>
                         <td><?=$nilai['nilai_total']?></td>
+                        <td><?=$nilai['nilai_sikap']?></td>
                         <!-- <td><input type="text" name="total[]" class="form-control" placeholder="Nilai Total"></td> -->
                     </tr>
                     <?php 

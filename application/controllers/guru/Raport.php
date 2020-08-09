@@ -46,6 +46,7 @@ class Raport extends CI_controller
             'kelas_ampas' => $kelas,
             'siswa' => $this->db->query("SELECT * FROM `siswa` JOIN kelas ON kelas.id_kelas=siswa.id_kelas WHERE siswa.nisn = $nisn")->row_array(),
             'id_tahun' => getIdTahun(getTahun()),
+            'tahun' => $this->db->get_where('tahun_ajaran', ['id_tahun_ajaran' => getIdTahun(getTahun())])->row_array(),
             'mapel' => $this->db->query("SELECT * FROM `mapel_kelas` JOIN mata_pelajaran AS mapel ON mapel.kode_mapel=mapel_kelas.kode_mapel WHERE mapel_kelas.id_kelas = ".$kelas['id_kelas'])->result_array()
         ];
 
