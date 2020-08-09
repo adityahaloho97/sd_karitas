@@ -71,7 +71,7 @@
                     <th class="text-nowrap" style="width: 15%">Nilai Tugas</th>
                     <th class="text-nowrap" style="width: 15%">Nilai UTS</th>
                     <th class="text-nowrap" style="width: 15%">Nilai UAS</th>
-                    <!-- <th class="text-nowrap" style="width: 15%">Nilai Total</th> -->
+                    <th class="text-nowrap" style="width: 15%">Nilai Sikap</th>
                   </tr>
                 </thead>
                 
@@ -90,7 +90,15 @@
                         <td><input type="text" name="tugas[]" class="form-control" placeholder="Nilai Tugas" value="<?=$m['nilai_harian']?>" required><small style="color: red;"><?php echo form_error("tugas[]")?></small></td>
                         <td><input type="text" name="uts[]" class="form-control" placeholder="Nilai UTS" value="<?=$m['nilai_uts']?>" required></td>
                         <td><input type="text" name="uas[]" class="form-control" placeholder="Nilai UAS" value="<?=$m['nilai_uas']?>" required></td>
-                        <!-- <td><input type="text" name="total[]" class="form-control" placeholder="Nilai Total"></td> -->
+                        <td>
+                        <select name="sikap[]" class="form-control select2bs4" data-placeholder="pilih nilai sikap" id="sikap">
+                          <option></option>
+                          <option value="A" <?php if($m['nilai_sikap'] == 'A'){ echo 'selected'; }?>>A</option>
+                          <option value="B" <?php if($m['nilai_sikap'] == 'B'){ echo 'selected'; }?>>B</option>
+                          <option value="C" <?php if($m['nilai_sikap'] == 'C'){ echo 'selected'; }?>>C</option>
+                          <option value="D" <?php if($m['nilai_sikap'] == 'D'){ echo 'selected'; }?>>D</option>
+                        </select>  
+                        </td>
                     </tr>
                         <?php endforeach;?>
                     

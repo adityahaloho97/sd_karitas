@@ -71,7 +71,7 @@
                     <th class="text-nowrap" style="width: 15%">Nilai Tugas</th>
                     <th class="text-nowrap" style="width: 15%">Nilai UTS</th>
                     <th class="text-nowrap" style="width: 15%">Nilai UAS</th>
-                    <!-- <th class="text-nowrap" style="width: 15%">Nilai Total</th> -->
+                    <th class="text-nowrap" style="width: 15%">Nilai Sikap</th>
                   </tr>
                 </thead>
                 
@@ -90,7 +90,15 @@
                         <td><input type="text" name="tugas[]" class="form-control" placeholder="Nilai Tugas" required><small style="color: red;"><?php echo form_error("tugas[]")?></small></td>
                         <td><input type="text" name="uts[]" class="form-control" placeholder="Nilai UTS" required></td>
                         <td><input type="text" name="uas[]" class="form-control" placeholder="Nilai UAS" required></td>
-                        <!-- <td><input type="text" name="total[]" class="form-control" placeholder="Nilai Total"></td> -->
+                        <td>
+                        <select name="sikap[]" class="form-control select2bs4" data-placeholder="pilih nilai sikap" id="sikap">
+                          <option></option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                          <option value="D">D</option>
+                        </select>  
+                        </td>
                     </tr>
                         <?php endforeach;?>
                     
