@@ -32,20 +32,20 @@
                           </div>
                           <!-- /.card-header -->
                           <!-- form start -->
-                          <form action="" method="post" role="form" enctype="multipart/form-data">
+                          <form action="" method="post" id="form" role="form" enctype="multipart/form-data">
                               <div class="card-body">
                                   <div class="row">
                                       <div class="col-md-8">
                                           <div class="form-group">
                                               <label for="nama">Nama Lengkap <span class="text-danger">*</span> </label>
-                                              <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Lengkap" value="<?php if (!empty($siswa)) { echo $siswa['nama_siswa'];} else { echo set_value('nama');} ?>">
+                                              <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Lengkap" data-rule="required|name" value="<?php if (!empty($siswa)) { echo $siswa['nama_siswa'];} else { echo set_value('nama');} ?>">
                                               <small class="text-danger mt-2"><?= form_error('nama') ?></small>
                                           </div>
                                       </div>
                                       <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="nama">NISN <span class="text-danger">*</span></label>
-                                              <input type="text" class="form-control" name="nisn" id="nisn" placeholder="Masukkan NISN" value="<?php if (!empty($siswa)) {echo $siswa['nisn'];} else {echo set_value('nisn');} ?>">
+                                              <input type="text" class="form-control" name="nisn" id="nisn" placeholder="Masukkan NISN" data-rule="integer|min-0" value="<?php if (!empty($siswa)) {echo $siswa['nisn'];} else {echo set_value('nisn');} ?>">
                                               <small class="text-danger mt-2"><?= form_error('nisn') ?></small>
                                           </div>
                                       </div>
@@ -69,7 +69,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label >Kelas</label>
-                                            <select name="kelas" id="kelas" class="form-control select2bs4" data-placeholder="Pilih Kelas">
+                                            <select name="kelas" id="kelas" data-rule="required" class="form-control select2bs4" data-placeholder="Pilih Kelas">
                                             <option value=""></option>
                                             <?php
                                             foreach($kelas AS $k) :
@@ -85,7 +85,7 @@
                                       <div class="col-md-6">
                                           <div class="form-group">
                                               <label for="nama">Agama <span class="text-danger">*</span></label>
-                                              <select name="agama" id="agama" class="form-control select2bs4" data-placeholder="Pilih Agama" require>
+                                              <select name="agama" id="agama" data-rule="required" class="form-control select2bs4" data-placeholder="Pilih Agama" require>
                                                   <option></option>
                                                   <option value="islam">Islam</option>
                                                   <option value="kristen">Kristen</option>
@@ -102,7 +102,7 @@
                                       <div class="col-md-8">
                                           <div class="form-group">
                                               <label for="visi">Tempat Lahir <span class="text-danger">*</span></label>
-                                              <input type="text" class="form-control" name="tempat_lahir" id="nama" placeholder="Masukkan Tempat Lahir" value="<?php if (!empty($siswa)) {echo $siswa['tempat_lahir'];} else {echo set_value('tempat_lahir');} ?>">
+                                              <input type="text" class="form-control" data-rule="required|name" name="tempat_lahir" id="nama" placeholder="Masukkan Tempat Lahir" value="<?php if (!empty($siswa)) {echo $siswa['tempat_lahir'];} else {echo set_value('tempat_lahir');} ?>">
                                               <small class="text-danger mt-2"><?= form_error('tempat_lahir') ?></small>
                                           </div>
                                       </div>
@@ -115,7 +115,7 @@
                                                           <i class="far fa-calendar-alt"></i>
                                                       </span>
                                                   </div>
-                                                  <input type="text" name="tgl_lahir" class="form-control float-right" placeholder="Pilih tanggal" id="datepicker1" value="<?php if (!empty($siswa['tanggal_lahir'])) { echo DateTime::createFromFormat('Y-m-d', $siswa['tanggal_lahir'])->format('m/d/Y'); } else {   echo set_value('tanggal_lahir');} ?>">
+                                                  <input type="text" name="tgl_lahir" class="form-control float-right" placeholder="Pilih tanggal" data-rule="required" id="datepicker1" value="<?php if (!empty($siswa['tanggal_lahir'])) { echo DateTime::createFromFormat('Y-m-d', $siswa['tanggal_lahir'])->format('m/d/Y'); } else {   echo set_value('tanggal_lahir');} ?>">
                                               </div>
                                               <!-- /.input group -->
                                               <small class="text-danger mt-2"><?= form_error('tgl_lahir') ?></small>
@@ -125,7 +125,7 @@
       
                                   <div class="form-group">
                                       <label for="misi">Alamat Rumah <span class="text-danger">*</span></label>
-                                      <textarea id="misi" name="alamat" class="form-control" style="height: 150px;" placeholder="Masukkan Alamat Rumah"><?php if (!empty($siswa)) { echo $siswa['alamat']; } else { echo set_value('alamat');} ?></textarea>
+                                      <textarea id="misi" name="alamat" data-rule="required" class="form-control" style="height: 150px;" placeholder="Masukkan Alamat Rumah"><?php if (!empty($siswa)) { echo $siswa['alamat']; } else { echo set_value('alamat');} ?></textarea>
                                       <small class="text-danger mt-2"><?= form_error('alamat') ?></small>
                                   </div>
                                 <hr>
@@ -133,14 +133,14 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="nama">Nama Orang Tua <span class="text-danger">*</span> </label>
-                                            <input type="text" class="form-control" name="nama_ortu" id="nama" placeholder="Masukkan Nama Ortu" value="<?php if (!empty($siswa)) { echo $siswa['nama_ortu'];} else { echo set_value('nama_ortu');} ?>">
+                                            <input type="text" class="form-control" name="nama_ortu" data-rule="required|name" id="nama" placeholder="Masukkan Nama Ortu" value="<?php if (!empty($siswa)) { echo $siswa['nama_ortu'];} else { echo set_value('nama_ortu');} ?>">
                                             <small class="text-danger mt-2"><?= form_error('nama_ortu') ?></small>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nama">Telepon Orang Tua <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="telp_ortu" id="nisn" placeholder="Masukkan Telp Ortu" value="<?php if (!empty($siswa)) {echo $siswa['telepon_ortu'];} else {echo set_value('telp_ortu');} ?>">
+                                            <input type="text" class="form-control" name="telp_ortu" id="nisn" placeholder="Masukkan Telp Ortu" data-rule="required|phone" value="<?php if (!empty($siswa)) {echo $siswa['telepon_ortu'];} else {echo set_value('telp_ortu');} ?>">
                                             <small class="text-danger mt-2"><?= form_error('telp_ortu') ?></small>
                                         </div>
                                     </div>
@@ -149,21 +149,21 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="nama">Pekerjaan Orang Tua <span class="text-danger">*</span> </label>
-                                            <input type="text" class="form-control" name="pekerjaan_ortu" id="nama" placeholder="Masukkan Pekerjaan Ortu" value="<?php if (!empty($siswa)) { echo $siswa['pekerjaan_ortu'];} else { echo set_value('pekerjaan_ortu');} ?>">
+                                            <input type="text" class="form-control" name="pekerjaan_ortu" id="nama" placeholder="Masukkan Pekerjaan Ortu" data-rule="required|name" value="<?php if (!empty($siswa)) { echo $siswa['pekerjaan_ortu'];} else { echo set_value('pekerjaan_ortu');} ?>">
                                             <small class="text-danger mt-2"><?= form_error('pekerjaan_ortu') ?></small>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nama">Penghasilan Orang Tua <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="penghasilan_ortu" id="nisn" placeholder="Masukkan Penghasilan Ortu" value="<?php if (!empty($siswa)) {echo $siswa['penghasilan_ortu'];} else {echo set_value('penghasilan_ortu');} ?>">
+                                            <input type="text" class="form-control" name="penghasilan_ortu" id="nisn" placeholder="Masukkan Penghasilan Ortu" data-rule="required|integer|min-0" value="<?php if (!empty($siswa)) {echo $siswa['penghasilan_ortu'];} else {echo set_value('penghasilan_ortu');} ?>">
                                             <small class="text-danger mt-2"><?= form_error('penghasilan_ortu') ?></small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                       <label for="misi">Alamat Orang Tua <span class="text-danger">*</span></label>
-                                      <textarea id="misi" name="alamat_ortu" class="form-control" style="height: 150px;" placeholder="Masukkan Alamat Ortu"><?php if (!empty($siswa)) { echo $siswa['alamat_ortu']; } else { echo set_value('alamat_ortu');} ?></textarea>
+                                      <textarea id="misi" name="alamat_ortu" data-rule="required" class="form-control" style="height: 150px;" placeholder="Masukkan Alamat Ortu"><?php if (!empty($siswa)) { echo $siswa['alamat_ortu']; } else { echo set_value('alamat_ortu');} ?></textarea>
                                       <small class="text-danger mt-2"><?= form_error('alamat_ortu') ?></small>
                                   </div>
 
@@ -195,7 +195,17 @@
     //Initialize Select2 Elements
     $('.select2bs4').select2({
         theme: 'bootstrap4'
-    })
+    });
+
+    // Get form handle
+    var formHandle = document.querySelector('#form');
+
+    // Got to validation
+    new Validator(formHandle, function (err, res) {
+
+    // some code of success of validation
+    return res;
+    });
   </script>
 
   <script>

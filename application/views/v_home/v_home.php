@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="<?= base_url('assets/plugins/toastr/toastr.min.css') ?>">
         <!-- Theme style -->
         <link rel="stylesheet" href="<?= base_url('assets/dist/css/adminlte.css') ?>">
+        <!-- <link rel="stylesheet" href="<?= base_url('assets/js-form-validator/assets/css/forms.css') ?>"> -->
         <link href="<?php echo base_url('assets/css/ampas.css')?>" rel="stylesheet" />
     </head>
     <body id="page-top">
@@ -109,13 +110,13 @@
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
                         <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                        <form action="" method="POST">
+                        <form id="formDaftar" action="" method="POST">
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Nama Lengkap <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="ampas" name="nama" type="text" placeholder="Masukkan Nama Lengkap" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama')?>"onkeyup="huruf(this)"/>
+                                            <input class="form-control" id="ampas" name="nama" type="text" data-rule="required|name" placeholder="Masukkan Nama Lengkap" required="required" value="<?php echo set_value('nama')?>"/>
                                             <small class="text-danger"> <span id="ampas_error"></span><?= form_error('nama') ?></small>
                                         </div>
                                     </div>
@@ -124,8 +125,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>NISN </label>
-                                            
-                                            <input class="form-control" id="nisn" name="nisn" type="text" placeholder="NISN" data-validation-required-message="Please enter your name." value="<?php echo set_value('nisn')?>" />
+                                            <input class="form-control" id="nisn" name="nisn" type="text" placeholder="NISN" data-rule="notzero|integer" data-validation-required-message="Please enter your name." value="<?php echo set_value('nisn')?>" />
                                             <small>belum memiliki NISN kosongkan</small>
                                             <small class="text-danger"><?= form_error('nisn') ?></small>
                                         </div>
@@ -137,7 +137,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                         <label>Tanggal lahir <span class="text-danger">*</span></label>
-                                        <input type="text" name="tgl_lahir" class="form-control" placeholder="MM/DD/YYYY" value="<?php echo set_value('tgl_lahir')?>" id="datepicker" required="required">
+                                        <input type="text" name="tgl_lahir" data-rule="required" class="form-control" placeholder="MM/DD/YYYY" value="<?php echo set_value('tgl_lahir')?>" id="datepicker" required="required">
                                         <small class="text-danger"><?= form_error('tgl_lahir') ?></small>
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Tempat Lahir <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="tempat_lahir" type="text" placeholder="Masukkan Tempat lahir" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('tempat_lahir')?>" />
+                                            <input class="form-control" id="name" name="tempat_lahir"data-rule="required|name" type="text" placeholder="Masukkan Tempat lahir" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('tempat_lahir')?>" />
                                             <small class="text-danger"><?= form_error('tempat_lahir') ?></small>
                                         </div>
                                     </div>
@@ -179,7 +179,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Agama <span class="text-danger">*</span></label>
-                                            <select name="agama" id="agama" class="form-control" placeholder="Pilih Agama" require>
+                                            <select name="agama" id="agama" data-rule="required" class="form-control select-box" placeholder="Pilih Agama" require>
                                                 <option value="">Pilih Agama</option>
                                                 <option value="islam">Islam</option>
                                                 <option value="kristen">Kristen</option>
@@ -195,7 +195,7 @@
 
                             <div class="control-group">
                                 <div class="form-group mb-0 pb-2">
-                                    <label>Alamat <span class="text-danger">*</span></label><textarea class="form-control" id="message" rows="5" name="alamat" placeholder="Masukkan Alamat" required="required" data-validation-required-message="Please enter a message."><?php echo set_value('alamat')?></textarea>
+                                    <label>Alamat <span class="text-danger">*</span></label><textarea class="form-control" id="message" rows="5" name="alamat" placeholder="Masukkan Alamat" data-rule="required" required="required" data-validation-required-message="Please enter a message."><?php echo set_value('alamat')?></textarea>
                                     <small class="text-danger"><?= form_error('alamat') ?></small>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Nama Orang Tua <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="nama_ortu" type="text" placeholder="Masukkan Nama Ortu" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama_ortu')?>" />
+                                            <input class="form-control" id="name" name="nama_ortu" type="text" placeholder="Masukkan Nama Ortu" data-rule="required|name" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('nama_ortu')?>" />
                                             <small class="text-danger"><?= form_error('nama_ortu') ?></small>
                                         </div>
                                     </div>
@@ -216,7 +216,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Telepon Orang Tua <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="telepon_ortu" type="text" placeholder="Masukkan Telp Ortu" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('telepon_ortu')?>" />
+                                            <input class="form-control" id="name" name="telepon_ortu" type="text" placeholder="Masukkan Telp Ortu" data-rule="required|phone" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('telepon_ortu')?>" />
                                             <small class="text-danger"><?= form_error('telepon_ortu') ?></small>
                                         </div>
                                     </div>
@@ -227,7 +227,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Pekerjaan Orang Tua <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="pekerjaan" type="text" placeholder="Masukkan Pekerjaan Ortu" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('pekerjaan')?>" />
+                                            <input class="form-control" id="name" name="pekerjaan" type="text" data-rule="required|name" placeholder="Masukkan Pekerjaan Ortu" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('pekerjaan')?>" />
                                             <small class="text-danger"><?= form_error('pekerjaan') ?></small>
                                         </div>
                                     </div>
@@ -236,7 +236,7 @@
                                     <div class="control-group">
                                         <div class="form-group mb-0 pb-2">
                                             <label>Penghasilan Orang Tua <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="name" name="penghasilan" type="text" placeholder="Masukkan Penghasilan Ortu" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('penghasilan')?>" />
+                                            <input class="form-control" id="name" name="penghasilan" type="text" data-rule="required|integer|min-0" placeholder="Masukkan Penghasilan Ortu" required="required" data-validation-required-message="Please enter your name." value="<?php echo set_value('penghasilan')?>" />
                                             <small class="text-danger"><?= form_error('penghasilan') ?></small>
                                         </div>
                                     </div>
@@ -244,7 +244,7 @@
                             </div>
                             <div class="control-group">
                                 <div class="form-group mb-0 pb-2">
-                                    <label>Alamat Orang Tua <span class="text-danger">*</span></label><textarea class="form-control" id="message" name="alamat_ortu" rows="5" placeholder="Masukkan Alamat Ortu" required="required" data-validation-required-message="Please enter a message."><?php echo set_value('alamat_ortu')?></textarea>
+                                    <label>Alamat Orang Tua <span class="text-danger">*</span></label><textarea class="form-control" data-rule="required" id="message" name="alamat_ortu" rows="5" placeholder="Masukkan Alamat Ortu" required="required" data-validation-required-message="Please enter a message."><?php echo set_value('alamat_ortu')?></textarea>
                                     <small class="text-danger"><?= form_error('alamat_ortu') ?></small>
                                 </div>
                             </div>
@@ -319,12 +319,18 @@
         <!-- <script src="<?php echo base_url('assets/js/js-form-validator.min.js')?>"></script>
         <script src="<?php echo base_url('assets/js/js-form-validator.js')?>"></script> -->
 
+        <script src="<?php echo base_url('assets/js-form-validator/js-form-validator.js')?>"></script>
+
         <script>
-            function huruf(e){
-                if ($('#ampas').val() == 1) {
-                    return $('ampas_error').text('hanya huruf')
-                }
-            }
+            // Get form handle
+            var formHandle = document.querySelector('#formDaftar');
+
+            // Got to validation
+            new Validator(formHandle, function (err, res) {
+
+                // some code of success of validation
+                return res;
+            });
         </script>
 
         <script>
