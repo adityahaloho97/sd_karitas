@@ -148,7 +148,7 @@ if($cek_naik > 0){
             <td><?=ucwords($m['nama_mapel'])?></td>
             <td><?=$kkm_nilai?></td>
             <td><?=$total?></td>
-            <td><?=$nilai['nilai_sikap']?></td>
+            <td><?=!empty($nilai['nilai_sikap'])?$nilai['nilai_sikap']:'-'?></td>
           </tr>
           
           <?php

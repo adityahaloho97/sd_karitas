@@ -19,3 +19,5 @@
 
 <!-- Select2 -->
 <script src="<?= base_url('assets/plugins/select2/js/select2.full.min.js') ?>"></script>
+
+<script src="<?php echo base_url('assets/js-form-validator/js-form-validator.js')?>"></script>
